@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects{% endblock title %}
+
+{% block content %}
+<section class="projects">
+  <h2>Projects</h2>
+
+  <article class="project">
+    <h3>Module 1: Personal Website in Flask</h3>
+
+    <p>
+      A multi-page personal website built with Flask and Jinja templates. Pages
+      share a single base.html layout and a navigation menu on the top right
+      The nav is defined once and the current page is highlighted
+      automatically by matching each link against the active Flask endpoint.
+    </p>
+
+    <p>
+      Routes are organized in a Flask Blueprint, which keeps the URL definitions in one module and makes
+      the endpoint names static/constant if the paths change later. Styling is in a single styles.css
+      file.
+    </p>
+
+    <p>
+      <strong>Built with:</strong> Python, Flask, Jinja2, HTML, CSS
+    </p>
+
+    <p>
+      <a href="https://github.com/robbyketchell-jhu/jhu_software_concepts">Link to Project on GitHub</a>
+    </p>
+  </article>
+</section>
+{% endblock content %}

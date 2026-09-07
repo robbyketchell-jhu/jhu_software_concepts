@@ -1,0 +1,10 @@
+<nav>
+  <ul>
+    <li><a href="{{ url_for('pages.home') }}"
+           {% if request.endpoint == 'pages.home' %}aria-current="page"{% endif %}>Home</a></li>
+    <li><a href="{{ url_for('pages.contact') }}"
+           {% if request.endpoint == 'pages.contact' %}aria-current="page"{% endif %}>Contact</a></li>
+    <li><a href="{{ url_for('pages.projects') }}"
+           {% if request.endpoint == 'pages.projects' %}aria-current="page"{% endif %}>Projects</a></li>
+  </ul>
+</nav>

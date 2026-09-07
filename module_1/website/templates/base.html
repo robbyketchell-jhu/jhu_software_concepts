@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robby Ketchell - {% block title %}{% endblock title %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  {% include("_navigation.html") %}
+
+  <header class="site-header">
+    <h1>Robby Ketchell</h1>
+    <p class="position">Software Engineer by day, Student by night</p>
+  </header>
+
+  <main>
+    {% block content %}{% endblock content %}
+  </main>
+</body>
+</html>

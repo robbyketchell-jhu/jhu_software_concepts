@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<section class="bio">
+  <div class="bio-text">
+    <p>
+      I spent two decaseds building data and software systems at the intersection of sport science
+      and engineering. Mostly in elite endurance sport - wind tunnels, aerodynamics, and performance 
+      modeling. Since then, I have worked in fintech, insurtech, healthtech, and other industries as
+      a Software Engineer.
+    </p>
+    <p>
+      I live in an 1835 farmhouse in New Hampshire
+      with my son who I am pictured with (however he is 8 years old now - this is an old pic) and my wife.
+    </p>
+  </div>
+
+  <img class="bio-photo"
+       src="{{ url_for('static', filename='images/robby+wyatt.png') }}"
+       alt="Portrait of Robby Ketchell">
+</section>
+{% endblock content %}
