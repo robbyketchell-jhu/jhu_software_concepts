@@ -1,2 +1,4 @@
 .DS_Store
 venv
+.env
+llm_extend_applicant_data_clean.json
