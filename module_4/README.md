@@ -6,12 +6,11 @@ An automated test suite and published documentation for the Grad Café
 analytics service built in Module 3. The application code moved into `src/`,
 all tests live in `tests/`, and coverage of `src/` is enforced at 100 percent.
 
-**Documentation:** built HTML is committed at
-[`docs/_build/html/index.html`](docs/_build/html/index.html); open it directly
-or rebuild with the commands below. Read the Docs is configured by
-[`.readthedocs.yaml`](../.readthedocs.yaml) at the repository root and will
-publish once the repository is made public and connected to a Read the Docs
-project; the published URL goes here when that is done.
+**Documentation:** <https://robbyketchell-jhu-software-concepts.readthedocs.io/en/latest/>
+
+Built HTML is also committed at
+[`docs/_build/html/index.html`](docs/_build/html/index.html), and can be
+rebuilt locally with the commands below.
 
 ```
 module_4/
@@ -147,7 +146,10 @@ open _build/html/index.html
 Pages: Overview and setup, Architecture, Testing guide, Operational notes,
 Troubleshooting, and an API reference with autodoc for every module including
 `scrape.py`, `clean.py`, `load_data.py`, `query_data.py` and the Flask routes.
-Read the Docs builds from [`.readthedocs.yaml`](../.readthedocs.yaml).
+Published at
+<https://robbyketchell-jhu-software-concepts.readthedocs.io/en/latest/>, built
+by Read the Docs from [`.readthedocs.yaml`](../.readthedocs.yaml) at the
+repository root.
 
 ## Changes from Module 3
 
