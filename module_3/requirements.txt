@@ -1,0 +1,13 @@
+# Module 3 - database, ORM, web app, PDF builder, scraper
+Flask==3.1.3
+SQLAlchemy==2.1.2
+psycopg[binary]==3.3.6
+python-dotenv==1.2.3
+reportlab==5.0.1
+beautifulsoup4==4.15.0
+urllib3==2.8.0
+
+# Optional: real TinyLlama standardizer for Pull Data (see llm_hosting/).
+# Without it, standardize.py falls back to a rules-based matcher.
+# llama-cpp-python>=0.2.90,<0.3.0
+# huggingface_hub>=0.23.0

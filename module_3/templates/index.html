@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grad Cafe Analysis</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <h1>Grad Cafe Applicant Analysis</h1>
+        <p class="subtitle">
+          Module 3 &middot; PostgreSQL via SQLAlchemy
+          {% if overview %}
+            &middot; {{ overview.total }} entries &middot; newest entry {{ overview.newest }}
+          {% endif %}
+          &middot; rendered {{ generated_at }}
+        </p>
+      </div>
+      <form method="post" action="{{ url_for('update_analysis') }}" class="inline-form">
+        <button type="submit" class="btn btn-primary">Update Analysis</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="page">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="flash flash-{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% if error %}
+      <div class="flash flash-error">{{ error }}</div>
+    {% endif %}
+
+    <section class="card controls">
+      <div class="controls-text">
+        <h2>Pull Data</h2>
+        <p>
+          Pull Data checks Grad Caf&eacute; for newly submitted application results and adds
+          new records to the database. Depending on the amount of new data available, this
+          may take some time. Only one pull can run at a time, and it never removes or
+          overwrites usable existing records.
+        </p>
+        <p>
+          <strong>Update Analysis</strong> (top right) re-queries PostgreSQL and redraws
+          this page with the latest numbers. It does not start a scrape.
+        </p>
+      </div>
+      <div class="controls-actions">
+        <form method="post" action="{{ url_for('pull_data') }}" class="inline-form">
+          <button type="submit" class="btn btn-secondary" id="pull-btn"
+                  {% if job.running %}disabled{% endif %}>
+            {% if job.running %}Pull Data (running&hellip;){% else %}Pull Data{% endif %}
+          </button>
+        </form>
+        <div id="job-status" class="job-status {% if job.running %}is-running{% elif job.finished %}{% if job.succeeded %}is-ok{% else %}is-error{% endif %}{% endif %}">
+          {% if job.running %}
+            <span class="dot"></span> Retrieving new data (started {{ job.started }})&hellip;
+          {% elif job.finished %}
+            {% if job.succeeded %}
+              Last pull finished at {{ job.finished }}. Click Update Analysis to refresh.
+            {% else %}
+              Last pull failed at {{ job.finished }} (exit code {{ job.returncode }}).
+            {% endif %}
+          {% else %}
+            No pull has been run in this session.
+          {% endif %}
+        </div>
+        {% if job.log %}
+          <pre id="job-log" class="job-log">{{ job.log | join('\n') }}</pre>
+        {% else %}
+          <pre id="job-log" class="job-log" hidden></pre>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="results">
+      {% for r in results %}
+        <article class="card result {% if r.kind == 'table' %}wide{% endif %}">
+          <h3><span class="qnum">Q{{ r.number }}</span> {{ r.title }}</h3>
+          {% if r.kind == 'lines' %}
+            <dl class="answers">
+              {% for label, value in r.lines %}
+                <div class="answer">
+                  <dt>{{ label }}</dt>
+                  <dd>{{ value }}</dd>
+                </div>
+              {% endfor %}
+            </dl>
+          {% else %}
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>{% for c in r.columns %}<th>{{ c }}</th>{% endfor %}</tr>
+                </thead>
+                <tbody>
+                  {% for row in r.rows %}
+                    <tr>{% for v in row %}<td>{{ v }}</td>{% endfor %}</tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </section>
+  </main>
+
+  <footer class="footer">
+    Data: self-reported Grad Caf&eacute; submissions. See <em>limitations.pdf</em> before
+    drawing conclusions from these numbers.
+  </footer>
+
+  <script>
+    // While a Pull Data run is active, poll /status so the user sees progress
+    // without reloading. Nothing here starts a scrape.
+    (function () {
+      var status = document.getElementById('job-status');
+      var log = document.getElementById('job-log');
+      var btn = document.getElementById('pull-btn');
+      if (!status.classList.contains('is-running')) { return; }
+
+      function tick() {
+        fetch('{{ url_for('status') }}')
+          .then(function (r) { return r.json(); })
+          .then(function (job) {
+            if (job.log && job.log.length) {
+              log.hidden = false;
+              log.textContent = job.log.join('\n');
+            }
+            if (job.running) {
+              status.innerHTML = '<span class="dot"></span> Retrieving new data (started ' + job.started + ')…';
+              setTimeout(tick, 3000);
+            } else {
+              status.classList.remove('is-running');
+              status.classList.add(job.succeeded ? 'is-ok' : 'is-error');
+              status.textContent = job.succeeded
+                ? 'Pull finished at ' + job.finished + '. Click Update Analysis to refresh the results.'
+                : 'Pull failed at ' + job.finished + ' (exit code ' + job.returncode + '). See the log.';
+              btn.disabled = false;
+              btn.textContent = 'Pull Data';
+            }
+          })
+          .catch(function () { setTimeout(tick, 5000); });
+      }
+      setTimeout(tick, 2000);
+    })();
+  </script>
+</body>
+</html>
