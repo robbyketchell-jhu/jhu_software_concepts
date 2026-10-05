@@ -1,0 +1,536 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.flask_app &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.flask_app</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.flask_app</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Flask web layer: the Analysis page and its two buttons.</span>
+
+<span class="sd">The app is built by :func:`create_app`, which takes every collaborator as a</span>
+<span class="sd">keyword argument. A test can therefore hand in a fake scraper, a fake loader</span>
+<span class="sd">and a fake analysis provider and exercise the whole surface without a network</span>
+<span class="sd">or a browser.</span>
+
+<span class="sd">Routes</span>
+<span class="sd">------</span>
+
+<span class="sd">==========================  ======  =========================================</span>
+<span class="sd">Route                       Method  Behaviour</span>
+<span class="sd">==========================  ======  =========================================</span>
+<span class="sd">``/``                       GET     Redirects to ``/analysis``.</span>
+<span class="sd">``/analysis``               GET     Renders the analysis page (HTTP 200).</span>
+<span class="sd">``/pull-data``              POST    Runs the ETL pipeline. ``202`` with</span>
+<span class="sd">                                    ``{"ok": true}``, or ``409`` with</span>
+<span class="sd">                                    ``{"busy": true}`` while a pull runs.</span>
+<span class="sd">``/update-analysis``        POST    Re-reads the database. ``200`` with</span>
+<span class="sd">                                    ``{"ok": true}``, or ``409`` with</span>
+<span class="sd">                                    ``{"busy": true}`` while a pull runs.</span>
+<span class="sd">``/status``                 GET     JSON snapshot of the busy state.</span>
+<span class="sd">==========================  ======  =========================================</span>
+
+<span class="sd">Busy state is held in :class:`PullState`, which is observable (``snapshot()``)</span>
+<span class="sd">and directly controllable (``begin()`` / ``finish()``). Tests never sleep;</span>
+<span class="sd">they flip the state and assert on the response.</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">current_app</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">url_for</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.orm_queries</span><span class="w"> </span><span class="kn">import</span> <span class="n">analysis_results</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.pull_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">pull_new_records</span>
+
+<span class="c1">#: Stable selector for the Pull Data button.</span>
+<span class="n">PULL_BUTTON_TESTID</span> <span class="o">=</span> <span class="s2">"pull-data-btn"</span>
+<span class="c1">#: Stable selector for the Update Analysis button.</span>
+<span class="n">UPDATE_BUTTON_TESTID</span> <span class="o">=</span> <span class="s2">"update-analysis-btn"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_now</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Return an ISO-8601 UTC timestamp."""</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="n">timespec</span><span class="o">=</span><span class="s2">"seconds"</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PullState">
+<a class="viewcode-back" href="../../api.html#src.flask_app.PullState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PullState</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Observable busy flag guarding the Pull Data pipeline.</span>
+
+<span class="sd">    One pull runs at a time. :meth:`begin` is atomic, so two concurrent</span>
+<span class="sd">    requests cannot both start a scrape, and the state is plain data that a</span>
+<span class="sd">    test can inspect or set without waiting on anything.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">started_at</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finished_at</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_error</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">#: Incremented every time the analysis is actually recomputed.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analysis_version</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1">#: Timestamp of the most recent successful analysis refresh.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analysis_refreshed_at</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="PullState.begin">
+<a class="viewcode-back" href="../../api.html#src.flask_app.PullState.begin">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">begin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Mark a pull as started.</span>
+
+<span class="sd">        :returns: ``True`` when this caller acquired the slot, ``False`` when</span>
+<span class="sd">            a pull was already running.</span>
+<span class="sd">        """</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">started_at</span> <span class="o">=</span> <span class="n">_now</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">finished_at</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_error</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="PullState.finish">
+<a class="viewcode-back" href="../../api.html#src.flask_app.PullState.finish">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Mark the running pull as finished.</span>
+
+<span class="sd">        :param result: the pipeline's stats dict on success.</span>
+<span class="sd">        :param error: the error message on failure.</span>
+<span class="sd">        """</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">finished_at</span> <span class="o">=</span> <span class="n">_now</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span> <span class="o">=</span> <span class="n">result</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_error</span> <span class="o">=</span> <span class="n">error</span></div>
+
+
+<div class="viewcode-block" id="PullState.note_analysis">
+<a class="viewcode-back" href="../../api.html#src.flask_app.PullState.note_analysis">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">note_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Record that the analysis was recomputed."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analysis_version</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analysis_refreshed_at</span> <span class="o">=</span> <span class="n">_now</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="PullState.snapshot">
+<a class="viewcode-back" href="../../api.html#src.flask_app.PullState.snapshot">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the state as a JSON-serialisable dict.</span>
+
+<span class="sd">        :returns: a dict describing the current and most recent pull.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">"running"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">,</span>
+            <span class="s2">"started_at"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">started_at</span><span class="p">,</span>
+            <span class="s2">"finished_at"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">finished_at</span><span class="p">,</span>
+            <span class="s2">"last_result"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span><span class="p">,</span>
+            <span class="s2">"last_error"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_error</span><span class="p">,</span>
+            <span class="s2">"analysis_version"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis_version</span><span class="p">,</span>
+            <span class="s2">"analysis_refreshed_at"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis_refreshed_at</span><span class="p">,</span>
+        <span class="p">}</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Services">
+<a class="viewcode-back" href="../../api.html#src.flask_app.Services">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Services</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Container for the collaborators a request may need.</span>
+
+<span class="sd">    :param scraper: callable taking the set of known URLs and returning raw</span>
+<span class="sd">        records, or ``None`` to use the real scraper.</span>
+<span class="sd">    :param loader: callable taking cleaned records and returning</span>
+<span class="sd">        ``(upserted, skipped, total)``, or ``None`` for the real loader.</span>
+<span class="sd">    :param analysis: zero-argument callable returning the analysis results,</span>
+<span class="sd">        defaulting to :func:`src.orm_queries.analysis_results`.</span>
+<span class="sd">    :param run_async: when ``True`` a pull runs on a background thread, which</span>
+<span class="sd">        is what the real app wants; tests pass ``False`` so the pull completes</span>
+<span class="sd">        within the request and the assertions stay deterministic.</span>
+<span class="sd">    :param max_pages: page limit handed to the real scraper.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scraper</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">analysis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">run_async</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">max_pages</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scraper</span> <span class="o">=</span> <span class="n">scraper</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loader</span> <span class="o">=</span> <span class="n">loader</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="o">=</span> <span class="n">analysis</span> <span class="ow">or</span> <span class="n">analysis_results</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_async</span> <span class="o">=</span> <span class="n">run_async</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_pages</span> <span class="o">=</span> <span class="n">max_pages</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">PullState</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Services.run_pull">
+<a class="viewcode-back" href="../../api.html#src.flask_app.Services.run_pull">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_pull</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Run the ETL pipeline once with the configured collaborators.</span>
+
+<span class="sd">        :returns: the pipeline's stats dict.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">pull_new_records</span><span class="p">(</span>
+            <span class="n">scraper</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scraper</span><span class="p">,</span>
+            <span class="n">loader</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">,</span>
+            <span class="n">max_pages</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_pages</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="get_services">
+<a class="viewcode-back" href="../../api.html#src.flask_app.get_services">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_services</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the :class:`Services` attached to *app*.</span>
+
+<span class="sd">    :param app: the Flask app, defaulting to the current one.</span>
+<span class="sd">    :returns: the services container.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">app</span> <span class="ow">or</span> <span class="n">current_app</span><span class="p">)</span><span class="o">.</span><span class="n">extensions</span><span class="p">[</span><span class="s2">"gradcafe"</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="create_app">
+<a class="viewcode-back" href="../../api.html#src.flask_app.create_app">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_app</span><span class="p">(</span><span class="n">config_object</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">scraper</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">analysis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+               <span class="n">run_async</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_pages</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">database_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Build and return the Flask application.</span>
+
+<span class="sd">    :param config_object: mapping of Flask config values to apply, e.g.</span>
+<span class="sd">        ``{"TESTING": True}``.</span>
+<span class="sd">    :param scraper: fake or real scraper, see :class:`Services`.</span>
+<span class="sd">    :param loader: fake or real loader, see :class:`Services`.</span>
+<span class="sd">    :param analysis: analysis provider, see :class:`Services`.</span>
+<span class="sd">    :param run_async: whether Pull Data runs on a background thread.</span>
+<span class="sd">    :param max_pages: page limit handed to the real scraper.</span>
+<span class="sd">    :param database_url: overrides ``DATABASE_URL`` for this app's ORM engine.</span>
+<span class="sd">    :returns: the configured :class:`flask.Flask` application.</span>
+<span class="sd">    """</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">load_environment</span><span class="p">()</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="n">SECRET_KEY</span><span class="o">=</span><span class="s2">"gradcafe-analysis-page"</span><span class="p">,</span>  <span class="c1"># signs flash cookies only</span>
+        <span class="n">DATABASE_URL</span><span class="o">=</span><span class="n">database_url</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">database_url</span><span class="p">(),</span>
+        <span class="n">JSON_SORT_KEYS</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">config_object</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">config_object</span><span class="p">)</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">extensions</span><span class="p">[</span><span class="s2">"gradcafe"</span><span class="p">]</span> <span class="o">=</span> <span class="n">Services</span><span class="p">(</span>
+        <span class="n">scraper</span><span class="o">=</span><span class="n">scraper</span><span class="p">,</span>
+        <span class="n">loader</span><span class="o">=</span><span class="n">loader</span><span class="p">,</span>
+        <span class="n">analysis</span><span class="o">=</span><span class="n">analysis</span><span class="p">,</span>
+        <span class="n">run_async</span><span class="o">=</span><span class="n">run_async</span><span class="p">,</span>
+        <span class="n">max_pages</span><span class="o">=</span><span class="n">max_pages</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">register_routes</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">app</span></div>
+
+
+
+<div class="viewcode-block" id="register_routes">
+<a class="viewcode-back" href="../../api.html#src.flask_app.register_routes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_routes</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Attach every route to *app*.</span>
+
+<span class="sd">    :param app: the Flask application.</span>
+<span class="sd">    """</span>
+
+    <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">home</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">"""Redirect the site root to the analysis page."""</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">"analysis"</span><span class="p">))</span>
+
+    <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/analysis"</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">analysis</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">"""Render the analysis page.</span>
+
+<span class="sd">        :returns: the rendered page with HTTP 200, or an error banner with</span>
+<span class="sd">            HTTP 200 when the database cannot be read.</span>
+<span class="sd">        """</span>
+        <span class="n">services</span> <span class="o">=</span> <span class="n">get_services</span><span class="p">()</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">services</span><span class="o">.</span><span class="n">analysis</span><span class="p">()</span>
+            <span class="n">services</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">note_analysis</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># surfaced to the user, not a crash</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Could not read the analysis from PostgreSQL "</span>
+                <span class="sa">f</span><span class="s2">"(</span><span class="si">{</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">). Check DATABASE_URL and that the "</span>
+                <span class="sa">f</span><span class="s2">"database is running."</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
+            <span class="s2">"index.html"</span><span class="p">,</span>
+            <span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
+            <span class="n">state</span><span class="o">=</span><span class="n">services</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snapshot</span><span class="p">(),</span>
+            <span class="n">pull_testid</span><span class="o">=</span><span class="n">PULL_BUTTON_TESTID</span><span class="p">,</span>
+            <span class="n">update_testid</span><span class="o">=</span><span class="n">UPDATE_BUTTON_TESTID</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/pull-data"</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pull_data_route</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">"""Start a Pull Data run.</span>
+
+<span class="sd">        :returns: ``202`` with ``{"ok": true}`` when the pull was accepted,</span>
+<span class="sd">            ``409`` with ``{"busy": true}`` when one is already running, or</span>
+<span class="sd">            ``500`` with ``{"ok": false}`` when the pipeline raised.</span>
+<span class="sd">        """</span>
+        <span class="n">services</span> <span class="o">=</span> <span class="n">get_services</span><span class="p">()</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">services</span><span class="o">.</span><span class="n">state</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">"ok"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"busy"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                            <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"A data pull is already running."</span><span class="p">}),</span> <span class="mi">409</span>
+
+        <span class="k">if</span> <span class="n">services</span><span class="o">.</span><span class="n">run_async</span><span class="p">:</span>  <span class="c1"># pragma: no cover - threading is not under test</span>
+            <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">_run_pull_safely</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">services</span><span class="p">,),</span>
+                             <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">"ok"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"busy"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"started"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                            <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Pull Data started."</span><span class="p">}),</span> <span class="mi">202</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">services</span><span class="o">.</span><span class="n">run_pull</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">"ok"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"busy"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"error"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">),</span>
+                            <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Pull Data failed; no rows were changed."</span><span class="p">}),</span> <span class="mi">500</span>
+
+        <span class="n">state</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">"ok"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"busy"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"result"</span><span class="p">:</span> <span class="n">result</span><span class="p">,</span>
+                        <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Pull Data finished."</span><span class="p">}),</span> <span class="mi">202</span>
+
+    <span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/update-analysis"</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_analysis_route</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">"""Recompute the analysis from the current database contents.</span>
+
+<span class="sd">        Never starts a scrape.</span>
+
+<span class="sd">        :returns: ``200`` with ``{"ok": true}``, ``409`` with</span>
+<span class="sd">            ``{"busy": true}`` while a pull is running, or ``500`` with</span>
+<span class="sd">            ``{"ok": false}`` when the query layer raised.</span>
+<span class="sd">        """</span>
+        <span class="n">services</span> <span class="o">=</span> <span class="n">get_services</span><span class="p">()</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">services</span><span class="o">.</span><span class="n">state</span>
+        <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
+                <span class="s2">"ok"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">"busy"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"New data is being retrieved; the analysis was not updated."</span><span class="p">,</span>
+            <span class="p">}),</span> <span class="mi">409</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">services</span><span class="o">.</span><span class="n">analysis</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">"ok"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"busy"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"error"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">),</span>
+                            <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Could not refresh the analysis."</span><span class="p">}),</span> <span class="mi">500</span>
+
+        <span class="n">state</span><span class="o">.</span><span class="n">note_analysis</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
+            <span class="s2">"ok"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">"busy"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">"questions"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">),</span>
+            <span class="s2">"analysis_version"</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">analysis_version</span><span class="p">,</span>
+            <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Analysis refreshed from PostgreSQL."</span><span class="p">,</span>
+        <span class="p">}),</span> <span class="mi">200</span>
+
+    <span class="nd">@app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"/status"</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">"""Return the busy-state snapshot as JSON."""</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">get_services</span><span class="p">()</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()),</span> <span class="mi">200</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_run_pull_safely</span><span class="p">(</span><span class="n">services</span><span class="p">):</span>  <span class="c1"># pragma: no cover - background thread</span>
+<span class="w">    </span><span class="sd">"""Run a pull and record the outcome, swallowing any exception.</span>
+
+<span class="sd">    :param services: the services container owning the state.</span>
+<span class="sd">    """</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">services</span><span class="o">.</span><span class="n">run_pull</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="n">services</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">exc</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">services</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../api.html#src.flask_app.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>  <span class="c1"># pragma: no cover - development server entry point</span>
+<span class="w">    </span><span class="sd">"""Run the development server."""</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">create_app</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">"127.0.0.1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"PORT"</span><span class="p">,</span> <span class="s2">"5000"</span><span class="p">)),</span>
+            <span class="n">debug</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"FLASK_DEBUG"</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"1"</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.load_data &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.load_data</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.load_data</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Load cleaned Grad Cafe rows into PostgreSQL with psycopg.</span>
+
+<span class="sd">The loader is used in two places:</span>
+
+<span class="sd">* as a command line tool for the bulk Module 2 dataset</span>
+<span class="sd">  (``python -m src.load_data data.json``), and</span>
+<span class="sd">* from :mod:`src.pull_data` for rows that the Pull Data button just scraped.</span>
+
+<span class="sd">Every write is an upsert keyed on ``p_id``, so running the loader twice never</span>
+<span class="sd">duplicates a row. That uniqueness policy is what the idempotency tests check.</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">psycopg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">psycopg</span><span class="w"> </span><span class="kn">import</span> <span class="n">sql</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.clean</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">clean_date</span><span class="p">,</span>
+    <span class="n">clean_float</span><span class="p">,</span>
+    <span class="n">clean_int</span><span class="p">,</span>
+    <span class="n">clean_scraped_record</span><span class="p">,</span>
+    <span class="n">clean_text</span><span class="p">,</span>
+    <span class="n">entry_id_from_url</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1">#: DDL for the required Module 3 schema.</span>
+<span class="n">CREATE_TABLE</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">CREATE TABLE IF NOT EXISTS applicants (</span>
+<span class="s2">    p_id                     INTEGER PRIMARY KEY,</span>
+<span class="s2">    program                  TEXT,</span>
+<span class="s2">    comments                 TEXT,</span>
+<span class="s2">    date_added               DATE,</span>
+<span class="s2">    url                      TEXT,</span>
+<span class="s2">    status                   TEXT,</span>
+<span class="s2">    term                     TEXT,</span>
+<span class="s2">    us_or_international      TEXT,</span>
+<span class="s2">    gpa                      FLOAT,</span>
+<span class="s2">    gre                      FLOAT,</span>
+<span class="s2">    gre_v                    FLOAT,</span>
+<span class="s2">    gre_aw                   FLOAT,</span>
+<span class="s2">    degree                   TEXT,</span>
+<span class="s2">    llm_generated_program    TEXT,</span>
+<span class="s2">    llm_generated_university TEXT</span>
+<span class="s2">);</span>
+<span class="s2">"""</span>
+
+<span class="c1">#: Column order used by :func:`to_row` and the INSERT statement.</span>
+<span class="n">COLUMNS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"p_id"</span><span class="p">,</span> <span class="s2">"program"</span><span class="p">,</span> <span class="s2">"comments"</span><span class="p">,</span> <span class="s2">"date_added"</span><span class="p">,</span> <span class="s2">"url"</span><span class="p">,</span> <span class="s2">"status"</span><span class="p">,</span> <span class="s2">"term"</span><span class="p">,</span>
+    <span class="s2">"us_or_international"</span><span class="p">,</span> <span class="s2">"gpa"</span><span class="p">,</span> <span class="s2">"gre"</span><span class="p">,</span> <span class="s2">"gre_v"</span><span class="p">,</span> <span class="s2">"gre_aw"</span><span class="p">,</span> <span class="s2">"degree"</span><span class="p">,</span>
+    <span class="s2">"llm_generated_program"</span><span class="p">,</span> <span class="s2">"llm_generated_university"</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1">#: Upsert statement: a re-scraped entry updates its own row rather than</span>
+<span class="c1">#: creating a duplicate or failing on the primary key.</span>
+<span class="n">INSERT</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">SQL</span><span class="p">(</span>
+    <span class="s2">"INSERT INTO applicants (</span><span class="si">{cols}</span><span class="s2">) VALUES (</span><span class="si">{vals}</span><span class="s2">) "</span>
+    <span class="s2">"ON CONFLICT (p_id) DO UPDATE SET </span><span class="si">{updates}</span><span class="s2">"</span>
+<span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">cols</span><span class="o">=</span><span class="n">sql</span><span class="o">.</span><span class="n">SQL</span><span class="p">(</span><span class="s2">", "</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sql</span><span class="o">.</span><span class="n">Identifier</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">COLUMNS</span><span class="p">),</span>
+    <span class="n">vals</span><span class="o">=</span><span class="n">sql</span><span class="o">.</span><span class="n">SQL</span><span class="p">(</span><span class="s2">", "</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sql</span><span class="o">.</span><span class="n">Placeholder</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">COLUMNS</span><span class="p">),</span>
+    <span class="n">updates</span><span class="o">=</span><span class="n">sql</span><span class="o">.</span><span class="n">SQL</span><span class="p">(</span><span class="s2">", "</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">sql</span><span class="o">.</span><span class="n">SQL</span><span class="p">(</span><span class="s2">"</span><span class="si">{c}</span><span class="s2"> = EXCLUDED.</span><span class="si">{c}</span><span class="s2">"</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="n">sql</span><span class="o">.</span><span class="n">Identifier</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">COLUMNS</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="pick">
+<a class="viewcode-back" href="../../api.html#src.load_data.pick">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pick</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the first key present and non-``None`` in *record*.</span>
+
+<span class="sd">    The two record shapes use different names for the same field, so callers</span>
+<span class="sd">    list both, e.g. ``pick(record, "applicant_status", "status")``.</span>
+
+<span class="sd">    :param record: the record to inspect.</span>
+<span class="sd">    :param keys: candidate key names, in priority order.</span>
+<span class="sd">    :returns: the first value found, or ``None``.</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">record</span> <span class="ow">and</span> <span class="n">record</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">record</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="to_row">
+<a class="viewcode-back" href="../../api.html#src.load_data.to_row">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_row</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Map one record onto the :data:`COLUMNS` tuple.</span>
+
+<span class="sd">    Raw scraper records are normalised with</span>
+<span class="sd">    :func:`src.clean.clean_scraped_record` first.</span>
+
+<span class="sd">    :param record: a cleaned or raw record.</span>
+<span class="sd">    :returns: a tuple in :data:`COLUMNS` order, or ``None`` when the record</span>
+<span class="sd">        carries no usable ``p_id``.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="s2">"university"</span> <span class="ow">in</span> <span class="n">record</span> <span class="ow">and</span> <span class="s2">"entry_id"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">record</span><span class="p">:</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="n">clean_scraped_record</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+    <span class="n">p_id</span> <span class="o">=</span> <span class="n">clean_int</span><span class="p">(</span><span class="n">pick</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s2">"entry_id"</span><span class="p">,</span> <span class="s2">"p_id"</span><span class="p">))</span> <span class="ow">or</span> <span class="n">entry_id_from_url</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"url"</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">p_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">p_id</span><span class="p">,</span>
+        <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"program"</span><span class="p">)),</span>
+        <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"comments"</span><span class="p">)),</span>
+        <span class="n">clean_date</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"date_added"</span><span class="p">)),</span>
+        <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"url"</span><span class="p">)),</span>
+        <span class="n">clean_text</span><span class="p">(</span><span class="n">pick</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s2">"applicant_status"</span><span class="p">,</span> <span class="s2">"status"</span><span class="p">)),</span>
+        <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"term"</span><span class="p">)),</span>
+        <span class="n">clean_text</span><span class="p">(</span><span class="n">pick</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s2">"applicant_type"</span><span class="p">,</span> <span class="s2">"us_or_international"</span><span class="p">)),</span>
+        <span class="n">clean_float</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"gpa"</span><span class="p">),</span> <span class="s2">"gpa"</span><span class="p">),</span>
+        <span class="n">clean_float</span><span class="p">(</span><span class="n">pick</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s2">"gre_quant"</span><span class="p">,</span> <span class="s2">"gre"</span><span class="p">),</span> <span class="s2">"gre"</span><span class="p">),</span>
+        <span class="n">clean_float</span><span class="p">(</span><span class="n">pick</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s2">"gre_verbal"</span><span class="p">,</span> <span class="s2">"gre_v"</span><span class="p">),</span> <span class="s2">"gre_v"</span><span class="p">),</span>
+        <span class="n">clean_float</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"gre_aw"</span><span class="p">),</span> <span class="s2">"gre_aw"</span><span class="p">),</span>
+        <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"degree"</span><span class="p">)),</span>
+        <span class="n">clean_text</span><span class="p">(</span><span class="n">pick</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s2">"llm-generated-program"</span><span class="p">,</span> <span class="s2">"llm_generated_program"</span><span class="p">)),</span>
+        <span class="n">clean_text</span><span class="p">(</span><span class="n">pick</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s2">"llm-generated-university"</span><span class="p">,</span> <span class="s2">"llm_generated_university"</span><span class="p">)),</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="read_records">
+<a class="viewcode-back" href="../../api.html#src.load_data.read_records">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_records</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read a JSON array or JSON Lines file of records.</span>
+
+<span class="sd">    :param path: path to the data file.</span>
+<span class="sd">    :returns: the list of records.</span>
+<span class="sd">    :raises json.JSONDecodeError: when the file is not valid JSON.</span>
+<span class="sd">    """</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">handle</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"["</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span></div>
+
+
+
+<div class="viewcode-block" id="connect">
+<a class="viewcode-back" href="../../api.html#src.load_data.connect">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Open a psycopg connection to the application database.</span>
+
+<span class="sd">    :param url: connection URL, defaulting to ``DATABASE_URL``.</span>
+<span class="sd">    :returns: an open :class:`psycopg.Connection`.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">psycopg</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">psycopg_conninfo</span><span class="p">(</span><span class="n">url</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="ensure_database">
+<a class="viewcode-back" href="../../api.html#src.load_data.ensure_database">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ensure_database</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create the target database if it does not exist yet.</span>
+
+<span class="sd">    :param url: connection URL, defaulting to ``DATABASE_URL``.</span>
+<span class="sd">    :returns: ``True`` when a database was created.</span>
+<span class="sd">    """</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">database_name</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">admin</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">psycopg_conninfo</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">url_for_database</span><span class="p">(</span><span class="s2">"postgres"</span><span class="p">,</span> <span class="n">url</span><span class="p">))</span>
+    <span class="k">with</span> <span class="n">psycopg</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">admin</span><span class="p">,</span> <span class="n">autocommit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+            <span class="s2">"SELECT 1 FROM pg_database WHERE datname = </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">exists</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="o">.</span><span class="n">SQL</span><span class="p">(</span><span class="s2">"CREATE DATABASE </span><span class="si">{}</span><span class="s2">"</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sql</span><span class="o">.</span><span class="n">Identifier</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="ensure_table">
+<a class="viewcode-back" href="../../api.html#src.load_data.ensure_table">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ensure_table</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create the ``applicants`` table if it does not exist yet.</span>
+
+<span class="sd">    :param url: connection URL, defaulting to ``DATABASE_URL``.</span>
+<span class="sd">    """</span>
+    <span class="k">with</span> <span class="n">connect</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">CREATE_TABLE</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_records">
+<a class="viewcode-back" href="../../api.html#src.load_data.load_records">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_records</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Clean and upsert *records*.</span>
+
+<span class="sd">    The whole batch runs inside one transaction, so a failure leaves no</span>
+<span class="sd">    partial writes behind.</span>
+
+<span class="sd">    :param records: cleaned or raw records.</span>
+<span class="sd">    :param url: connection URL, defaulting to ``DATABASE_URL``.</span>
+<span class="sd">    :returns: a ``(upserted, skipped, total_rows)`` tuple, where *skipped*</span>
+<span class="sd">        counts records without a usable id and *total_rows* is the row count</span>
+<span class="sd">        of the table afterwards.</span>
+<span class="sd">    """</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">skipped</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">to_row</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">skipped</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">continue</span>
+        <span class="n">rows</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">row</span>  <span class="c1"># dedupe within the batch; later entries win</span>
+
+    <span class="k">with</span> <span class="n">connect</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cur</span><span class="p">:</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">CREATE_TABLE</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rows</span><span class="p">:</span>
+                <span class="n">cur</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">INSERT</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">rows</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT COUNT(*) FROM applicants"</span><span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">),</span> <span class="n">skipped</span><span class="p">,</span> <span class="n">total</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../api.html#src.load_data.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Command line entry point.</span>
+
+<span class="sd">    :param argv: argument list, defaulting to :data:`sys.argv` minus the</span>
+<span class="sd">        program name. The first argument is the data file to load.</span>
+<span class="sd">    :returns: a process exit code.</span>
+<span class="sd">    """</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">load_environment</span><span class="p">()</span>
+    <span class="n">argv</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">argv</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">argv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">argv</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Usage: python -m src.load_data &lt;data-file.json&gt;"</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">read_records</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Data file not found: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Could not parse </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ensure_database</span><span class="p">()</span>
+        <span class="n">upserted</span><span class="p">,</span> <span class="n">skipped</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="n">load_records</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">psycopg</span><span class="o">.</span><span class="n">OperationalError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Could not connect to PostgreSQL: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Check DATABASE_URL (or the DB_* variables)."</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">except</span> <span class="n">psycopg</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Database error: </span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Read </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">records</span><span class="p">)</span><span class="si">}</span><span class="s2"> records from </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Upserted </span><span class="si">{</span><span class="n">upserted</span><span class="si">}</span><span class="s2"> unique applicants (</span><span class="si">{</span><span class="n">skipped</span><span class="si">}</span><span class="s2"> skipped without an id)"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"applicants table now has </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2"> rows"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>  <span class="c1"># pragma: no cover - exercised via main()</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

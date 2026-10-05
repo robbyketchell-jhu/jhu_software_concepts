@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.config &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.config</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.config</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Database configuration.</span>
+
+<span class="sd">The single source of truth is the ``DATABASE_URL`` environment variable, for</span>
+<span class="sd">example::</span>
+
+<span class="sd">    DATABASE_URL=postgresql+psycopg://robby@localhost:5432/gradcafe</span>
+
+<span class="sd">When ``DATABASE_URL`` is not set the URL is assembled from the individual</span>
+<span class="sd">``DB_*`` variables that Module 3 used, so an existing ``.env`` keeps working.</span>
+<span class="sd">Nothing in this module ever hard-codes a credential; every value comes from</span>
+<span class="sd">the environment.</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">quote</span><span class="p">,</span> <span class="n">urlsplit</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
+
+<span class="c1">#: SQLAlchemy driver used for every connection URL this module produces.</span>
+<span class="n">DRIVER</span> <span class="o">=</span> <span class="s2">"postgresql+psycopg"</span>
+
+<span class="c1">#: Fallback values for the individual ``DB_*`` variables.</span>
+<span class="n">DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"DB_NAME"</span><span class="p">:</span> <span class="s2">"gradcafe"</span><span class="p">,</span>
+    <span class="s2">"DB_USER"</span><span class="p">:</span> <span class="s2">"postgres"</span><span class="p">,</span>
+    <span class="s2">"DB_PASSWORD"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+    <span class="s2">"DB_HOST"</span><span class="p">:</span> <span class="s2">"localhost"</span><span class="p">,</span>
+    <span class="s2">"DB_PORT"</span><span class="p">:</span> <span class="s2">"5432"</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="load_environment">
+<a class="viewcode-back" href="../../api.html#src.config.load_environment">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_environment</span><span class="p">(</span><span class="n">dotenv_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Load a ``.env`` file if one is present.</span>
+
+<span class="sd">    :param dotenv_path: explicit path to a ``.env`` file, or ``None`` to let</span>
+<span class="sd">        python-dotenv search upwards from the working directory.</span>
+<span class="sd">    :returns: ``True`` when a file was found and loaded.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">load_dotenv</span><span class="p">(</span><span class="n">dotenv_path</span><span class="p">,</span> <span class="n">override</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_from_parts</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Build a SQLAlchemy URL out of the individual ``DB_*`` variables."""</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"DB_USER"</span><span class="p">,</span> <span class="n">DEFAULTS</span><span class="p">[</span><span class="s2">"DB_USER"</span><span class="p">])</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"DB_PASSWORD"</span><span class="p">,</span> <span class="n">DEFAULTS</span><span class="p">[</span><span class="s2">"DB_PASSWORD"</span><span class="p">])</span>
+    <span class="n">host</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"DB_HOST"</span><span class="p">,</span> <span class="n">DEFAULTS</span><span class="p">[</span><span class="s2">"DB_HOST"</span><span class="p">])</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"DB_PORT"</span><span class="p">,</span> <span class="n">DEFAULTS</span><span class="p">[</span><span class="s2">"DB_PORT"</span><span class="p">])</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"DB_NAME"</span><span class="p">,</span> <span class="n">DEFAULTS</span><span class="p">[</span><span class="s2">"DB_NAME"</span><span class="p">])</span>
+
+    <span class="n">credentials</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">safe</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">password</span><span class="p">:</span>
+        <span class="n">credentials</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">credentials</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">quote</span><span class="p">(</span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">safe</span><span class="o">=</span><span class="s1">''</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">DRIVER</span><span class="si">}</span><span class="s2">://</span><span class="si">{</span><span class="n">credentials</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span>
+
+
+<div class="viewcode-block" id="normalize_url">
+<a class="viewcode-back" href="../../api.html#src.config.normalize_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">normalize_url</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return *url* with the SQLAlchemy psycopg driver spelled out.</span>
+
+<span class="sd">    ``postgres://`` and ``postgresql://`` URLs (what hosting providers and the</span>
+<span class="sd">    GitHub Actions Postgres service hand out) are rewritten to</span>
+<span class="sd">    ``postgresql+psycopg://`` so SQLAlchemy picks the installed driver.</span>
+
+<span class="sd">    :param url: any PostgreSQL connection URL.</span>
+<span class="sd">    :returns: the normalised URL.</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"postgresql+psycopg://"</span><span class="p">,</span> <span class="s2">"postgresql://"</span><span class="p">,</span> <span class="s2">"postgres://"</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">DRIVER</span> <span class="o">+</span> <span class="s2">"://"</span> <span class="o">+</span> <span class="n">url</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">):]</span>
+    <span class="k">return</span> <span class="n">url</span></div>
+
+
+
+<div class="viewcode-block" id="database_url">
+<a class="viewcode-back" href="../../api.html#src.config.database_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">database_url</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Return the SQLAlchemy URL for the application database.</span>
+
+<span class="sd">    :returns: a ``postgresql+psycopg://`` URL string.</span>
+<span class="sd">    """</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"DATABASE_URL"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">normalize_url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">if</span> <span class="n">url</span> <span class="k">else</span> <span class="n">_from_parts</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="psycopg_conninfo">
+<a class="viewcode-back" href="../../api.html#src.config.psycopg_conninfo">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">psycopg_conninfo</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Convert a SQLAlchemy URL into a libpq connection string for psycopg.</span>
+
+<span class="sd">    :param url: URL to convert, defaulting to :func:`database_url`.</span>
+<span class="sd">    :returns: a libpq conninfo string such as ``host=... dbname=...``.</span>
+<span class="sd">    """</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">urlsplit</span><span class="p">(</span><span class="n">normalize_url</span><span class="p">(</span><span class="n">url</span> <span class="ow">or</span> <span class="n">database_url</span><span class="p">()))</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"host"</span><span class="p">:</span> <span class="n">parts</span><span class="o">.</span><span class="n">hostname</span> <span class="ow">or</span> <span class="n">DEFAULTS</span><span class="p">[</span><span class="s2">"DB_HOST"</span><span class="p">],</span>
+        <span class="s2">"port"</span><span class="p">:</span> <span class="n">parts</span><span class="o">.</span><span class="n">port</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="n">DEFAULTS</span><span class="p">[</span><span class="s2">"DB_PORT"</span><span class="p">]),</span>
+        <span class="s2">"dbname"</span><span class="p">:</span> <span class="n">parts</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">DEFAULTS</span><span class="p">[</span><span class="s2">"DB_NAME"</span><span class="p">],</span>
+        <span class="s2">"user"</span><span class="p">:</span> <span class="n">parts</span><span class="o">.</span><span class="n">username</span> <span class="ow">or</span> <span class="n">DEFAULTS</span><span class="p">[</span><span class="s2">"DB_USER"</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">parts</span><span class="o">.</span><span class="n">password</span><span class="p">:</span>
+        <span class="n">fields</span><span class="p">[</span><span class="s2">"password"</span><span class="p">]</span> <span class="o">=</span> <span class="n">parts</span><span class="o">.</span><span class="n">password</span>
+    <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">fields</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="database_name">
+<a class="viewcode-back" href="../../api.html#src.config.database_name">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">database_name</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return just the database name from *url*.</span>
+
+<span class="sd">    :param url: URL to inspect, defaulting to :func:`database_url`.</span>
+<span class="sd">    :returns: the database name.</span>
+<span class="sd">    """</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">urlsplit</span><span class="p">(</span><span class="n">normalize_url</span><span class="p">(</span><span class="n">url</span> <span class="ow">or</span> <span class="n">database_url</span><span class="p">()))</span>
+    <span class="k">return</span> <span class="n">parts</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span> <span class="ow">or</span> <span class="n">DEFAULTS</span><span class="p">[</span><span class="s2">"DB_NAME"</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="url_for_database">
+<a class="viewcode-back" href="../../api.html#src.config.url_for_database">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">url_for_database</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return *url* pointed at a different database *name*.</span>
+
+<span class="sd">    Used to reach the maintenance ``postgres`` database when the application</span>
+<span class="sd">    database still has to be created.</span>
+
+<span class="sd">    :param name: database to switch to.</span>
+<span class="sd">    :param url: URL to rewrite, defaulting to :func:`database_url`.</span>
+<span class="sd">    :returns: the rewritten URL.</span>
+<span class="sd">    """</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">normalize_url</span><span class="p">(</span><span class="n">url</span> <span class="ow">or</span> <span class="n">database_url</span><span class="p">())</span>
+    <span class="n">head</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">head</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

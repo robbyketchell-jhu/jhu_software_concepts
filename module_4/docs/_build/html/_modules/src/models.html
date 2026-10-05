@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.models &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.models</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.models</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""SQLAlchemy 2.x mapping for the ``applicants`` table.</span>
+
+<span class="sd">The model maps the table that :mod:`src.load_data` creates; there is exactly</span>
+<span class="sd">one copy of the data and the ORM and the raw-SQL layer read the same rows.</span>
+
+<span class="sd">The engine is created lazily so that a test can point ``DATABASE_URL`` at a</span>
+<span class="sd">throwaway database and call :func:`reset_engine` before anything connects.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Date</span><span class="p">,</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">create_engine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeclarativeBase</span><span class="p">,</span> <span class="n">Mapped</span><span class="p">,</span> <span class="n">mapped_column</span><span class="p">,</span> <span class="n">sessionmaker</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+
+<span class="n">_engine</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">_session_factory</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="Base">
+<a class="viewcode-back" href="../../api.html#src.models.Base">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Declarative base for every mapped class in the project."""</span></div>
+
+
+
+<div class="viewcode-block" id="Applicant">
+<a class="viewcode-back" href="../../api.html#src.models.Applicant">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Applicant</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""One Grad Cafe submission.</span>
+
+<span class="sd">    The column names and types match the Module 3 schema exactly; changing</span>
+<span class="sd">    them would break the loader, the raw SQL and the saved analysis.</span>
+<span class="sd">    """</span>
+
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">"applicants"</span>
+
+    <span class="c1">#: Grad Cafe entry id. Primary key, and the uniqueness key for upserts.</span>
+    <span class="n">p_id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1">#: Free text combining department and university.</span>
+    <span class="n">program</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+    <span class="c1">#: Applicant comments.</span>
+    <span class="n">comments</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+    <span class="c1">#: Date the entry appeared on Grad Cafe.</span>
+    <span class="n">date_added</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">date</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Date</span><span class="p">)</span>
+    <span class="c1">#: Link to the Grad Cafe entry.</span>
+    <span class="n">url</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+    <span class="c1">#: Cleaned admission status (Accepted / Rejected / Wait listed / Interview).</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+    <span class="c1">#: Intended start term, e.g. ``"Fall 2026"``.</span>
+    <span class="n">term</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+    <span class="c1">#: Nationality classification (American / International / Other).</span>
+    <span class="n">us_or_international</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+    <span class="c1">#: Grade point average on a 4.0 scale.</span>
+    <span class="n">gpa</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Float</span><span class="p">)</span>
+    <span class="c1">#: GRE Quantitative score.</span>
+    <span class="n">gre</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Float</span><span class="p">)</span>
+    <span class="c1">#: GRE Verbal score.</span>
+    <span class="n">gre_v</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Float</span><span class="p">)</span>
+    <span class="c1">#: GRE Analytical Writing score.</span>
+    <span class="n">gre_aw</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Float</span><span class="p">)</span>
+    <span class="c1">#: Degree type, e.g. ``"PhD"`` or ``"Masters"``.</span>
+    <span class="n">degree</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+    <span class="c1">#: Department/program name standardised by the LLM.</span>
+    <span class="n">llm_generated_program</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+    <span class="c1">#: University name standardised by the LLM.</span>
+    <span class="n">llm_generated_university</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Text</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return a short developer-facing representation."""</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"Applicant(p_id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">p_id</span><span class="si">!r}</span><span class="s2">, program=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">program</span><span class="si">!r}</span><span class="s2">, "</span>
+            <span class="sa">f</span><span class="s2">"status=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="si">!r}</span><span class="s2">)"</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="Applicant.as_dict">
+<a class="viewcode-back" href="../../api.html#src.models.Applicant.as_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the row as a plain dict keyed by the Module 3 field names.</span>
+
+<span class="sd">        :returns: a dict with one key per column of the required schema.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">columns</span><span class="p">}</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="get_engine">
+<a class="viewcode-back" href="../../api.html#src.models.get_engine">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_engine</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the shared :class:`~sqlalchemy.engine.Engine`, creating it once.</span>
+
+<span class="sd">    :param url: an explicit URL, which also replaces any cached engine.</span>
+<span class="sd">        Defaults to :func:`src.config.database_url`.</span>
+<span class="sd">    :returns: the engine.</span>
+<span class="sd">    """</span>
+    <span class="k">global</span> <span class="n">_engine</span><span class="p">,</span> <span class="n">_session_factory</span>
+    <span class="k">if</span> <span class="n">_engine</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">url</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">url</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">database_url</span><span class="p">(),</span> <span class="n">pool_pre_ping</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">_session_factory</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">_engine</span><span class="p">,</span> <span class="n">expire_on_commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_engine</span></div>
+
+
+
+<div class="viewcode-block" id="get_session_factory">
+<a class="viewcode-back" href="../../api.html#src.models.get_session_factory">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_session_factory</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the shared :class:`~sqlalchemy.orm.sessionmaker`.</span>
+
+<span class="sd">    :param url: forwarded to :func:`get_engine`.</span>
+<span class="sd">    :returns: the session factory.</span>
+<span class="sd">    """</span>
+    <span class="n">get_engine</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_session_factory</span></div>
+
+
+
+<div class="viewcode-block" id="get_session">
+<a class="viewcode-back" href="../../api.html#src.models.get_session">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_session</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Open a new ORM :class:`~sqlalchemy.orm.Session`.</span>
+
+<span class="sd">    Intended to be used as a context manager::</span>
+
+<span class="sd">        with get_session() as session:</span>
+<span class="sd">            ...</span>
+
+<span class="sd">    :param url: forwarded to :func:`get_engine`.</span>
+<span class="sd">    :returns: a new session.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">get_session_factory</span><span class="p">(</span><span class="n">url</span><span class="p">)()</span></div>
+
+
+
+<div class="viewcode-block" id="reset_engine">
+<a class="viewcode-back" href="../../api.html#src.models.reset_engine">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">reset_engine</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Dispose of the cached engine so the next call rebuilds it.</span>
+
+<span class="sd">    Tests call this after changing ``DATABASE_URL``.</span>
+<span class="sd">    """</span>
+    <span class="k">global</span> <span class="n">_engine</span><span class="p">,</span> <span class="n">_session_factory</span>
+    <span class="k">if</span> <span class="n">_engine</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_engine</span><span class="o">.</span><span class="n">dispose</span><span class="p">()</span>
+    <span class="n">_engine</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_session_factory</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="create_all">
+<a class="viewcode-back" href="../../api.html#src.models.create_all">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_all</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Create the ``applicants`` table when it does not exist yet.</span>
+
+<span class="sd">    :param url: forwarded to :func:`get_engine`.</span>
+<span class="sd">    """</span>
+    <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">get_engine</span><span class="p">(</span><span class="n">url</span><span class="p">))</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

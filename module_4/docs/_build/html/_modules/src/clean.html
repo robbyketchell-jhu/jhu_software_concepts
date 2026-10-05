@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.clean &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.clean</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.clean</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Normalisation helpers for Grad Cafe rows.</span>
+
+<span class="sd">Two record shapes travel through the system:</span>
+
+<span class="sd">1. The cleaned/LLM-extended dataset produced in Module 2, whose keys are</span>
+<span class="sd">   ``entry_id``, ``applicant_status``, ``applicant_type``, ``gre_quant`` and</span>
+<span class="sd">   so on.</span>
+<span class="sd">2. Raw records straight out of :mod:`src.scrape`, whose keys are</span>
+<span class="sd">   ``university``, ``program``, ``status``, ``student_type``, ``gre`` ...</span>
+
+<span class="sd">:func:`clean_scraped_record` converts shape 2 into shape 1 so that a single</span>
+<span class="sd">loader can handle both without special cases.</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="c1">#: Placeholder strings that are treated as "no value supplied".</span>
+<span class="n">MISSING_DATA_VALUES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">""</span><span class="p">,</span> <span class="s2">"n/a"</span><span class="p">,</span> <span class="s2">"na"</span><span class="p">,</span> <span class="s2">"none"</span><span class="p">,</span> <span class="s2">"null"</span><span class="p">,</span> <span class="s2">"nan"</span><span class="p">,</span> <span class="s2">"-"</span><span class="p">,</span> <span class="s2">"--"</span><span class="p">}</span>
+
+<span class="c1">#: Date formats accepted by :func:`clean_date`, tried in order.</span>
+<span class="n">DATE_FORMATS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"%B </span><span class="si">%d</span><span class="s2">, %Y"</span><span class="p">,</span> <span class="s2">"%b </span><span class="si">%d</span><span class="s2">, %Y"</span><span class="p">,</span> <span class="s2">"</span><span class="si">%d</span><span class="s2"> %B %Y"</span><span class="p">,</span> <span class="s2">"</span><span class="si">%d</span><span class="s2"> %b %Y"</span><span class="p">,</span> <span class="s2">"%m/</span><span class="si">%d</span><span class="s2">/%Y"</span><span class="p">]</span>
+
+<span class="c1">#: Plausible ``(low, high)`` ranges per numeric field.</span>
+<span class="c1">#:</span>
+<span class="c1">#: Anything outside the range is stored as missing rather than kept, because a</span>
+<span class="c1">#: "GRE Quantitative" of 320 is really a combined score and a GPA of 9.2 is on</span>
+<span class="c1">#: a different scale. Those values would otherwise poison the averages.</span>
+<span class="n">POSSIBLE_SCORES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"gpa"</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">),</span>
+    <span class="s2">"gre"</span><span class="p">:</span> <span class="p">(</span><span class="mf">130.0</span><span class="p">,</span> <span class="mf">170.0</span><span class="p">),</span>
+    <span class="s2">"gre_v"</span><span class="p">:</span> <span class="p">(</span><span class="mf">130.0</span><span class="p">,</span> <span class="mf">170.0</span><span class="p">),</span>
+    <span class="s2">"gre_aw"</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">),</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="clean_text">
+<a class="viewcode-back" href="../../api.html#src.clean.clean_text">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">clean_text</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Strip a text value and map placeholders to ``None``.</span>
+
+<span class="sd">    :param value: any value; non-strings are coerced with :func:`str`.</span>
+<span class="sd">    :returns: the stripped text, or ``None`` when the value is missing or is</span>
+<span class="sd">        one of :data:`MISSING_DATA_VALUES`.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">MISSING_DATA_VALUES</span> <span class="k">else</span> <span class="n">text</span></div>
+
+
+
+<div class="viewcode-block" id="clean_float">
+<a class="viewcode-back" href="../../api.html#src.clean.clean_float">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">clean_float</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Pull a number out of *value* and range-check it against *field*.</span>
+
+<span class="sd">    Accepts real numbers as well as strings such as ``"3.80"`` or</span>
+<span class="sd">    ``"GPA 3.80"``.</span>
+
+<span class="sd">    :param value: the raw value.</span>
+<span class="sd">    :param field: key into :data:`POSSIBLE_SCORES` naming the valid range.</span>
+<span class="sd">    :returns: the number as a float, or ``None`` when absent or out of range.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d+(?:\.\d+)?"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+    <span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">=</span> <span class="n">POSSIBLE_SCORES</span><span class="p">[</span><span class="n">field</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">number</span> <span class="k">if</span> <span class="n">low</span> <span class="o">&lt;=</span> <span class="n">number</span> <span class="o">&lt;=</span> <span class="n">high</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="clean_int">
+<a class="viewcode-back" href="../../api.html#src.clean.clean_int">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">clean_int</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Extract a whole number from *value*.</span>
+
+<span class="sd">    :param value: the raw value.</span>
+<span class="sd">    :returns: the integer, or ``None`` when no digits are present.</span>
+<span class="sd">    """</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d+"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span> <span class="k">if</span> <span class="n">match</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="clean_date">
+<a class="viewcode-back" href="../../api.html#src.clean.clean_date">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">clean_date</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Parse a date written in any of :data:`DATE_FORMATS`.</span>
+
+<span class="sd">    A leading ``"Added on "`` prefix is tolerated.</span>
+
+<span class="sd">    :param value: the raw value.</span>
+<span class="sd">    :returns: a :class:`datetime.date`, or ``None`` when unparseable.</span>
+<span class="sd">    """</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"^added on\s*"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">DATE_FORMATS</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">continue</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="entry_id_from_url">
+<a class="viewcode-back" href="../../api.html#src.clean.entry_id_from_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">entry_id_from_url</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Extract the Grad Cafe entry id from a result URL.</span>
+
+<span class="sd">    ``https://www.thegradcafe.com/result/1020482`` yields ``1020482``.</span>
+
+<span class="sd">    :param url: the result URL.</span>
+<span class="sd">    :returns: the id as an integer, or ``None``.</span>
+<span class="sd">    """</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"/result/(\d+)"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="k">if</span> <span class="n">match</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="clean_scraped_record">
+<a class="viewcode-back" href="../../api.html#src.clean.clean_scraped_record">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">clean_scraped_record</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Convert one raw :mod:`src.scrape` record into loader shape.</span>
+
+<span class="sd">    The ``llm-generated-*`` keys are carried through untouched so that</span>
+<span class="sd">    :mod:`src.standardize` can fill them in either before or after cleaning.</span>
+
+<span class="sd">    :param record: a raw scraped record.</span>
+<span class="sd">    :returns: a dict using the cleaned Module 2 key names.</span>
+<span class="sd">    """</span>
+    <span class="n">program_name</span> <span class="o">=</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"program"</span><span class="p">))</span>
+    <span class="n">university</span> <span class="o">=</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"university"</span><span class="p">))</span>
+    <span class="n">program</span> <span class="o">=</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">part</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="p">(</span><span class="n">program_name</span><span class="p">,</span> <span class="n">university</span><span class="p">)</span> <span class="k">if</span> <span class="n">part</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"program"</span><span class="p">:</span> <span class="n">program</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">"program_name"</span><span class="p">:</span> <span class="n">program_name</span><span class="p">,</span>
+        <span class="s2">"university"</span><span class="p">:</span> <span class="n">university</span><span class="p">,</span>
+        <span class="s2">"degree"</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"degree"</span><span class="p">)),</span>
+        <span class="s2">"comments"</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"comments"</span><span class="p">)),</span>
+        <span class="s2">"date_added"</span><span class="p">:</span> <span class="n">clean_date</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"date_added"</span><span class="p">)),</span>
+        <span class="s2">"url"</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"url"</span><span class="p">)),</span>
+        <span class="s2">"applicant_status"</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"status"</span><span class="p">)),</span>
+        <span class="s2">"term"</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"semester_start"</span><span class="p">)),</span>
+        <span class="s2">"applicant_type"</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"student_type"</span><span class="p">)),</span>
+        <span class="s2">"gpa"</span><span class="p">:</span> <span class="n">clean_float</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"gpa"</span><span class="p">),</span> <span class="s2">"gpa"</span><span class="p">),</span>
+        <span class="s2">"gre_quant"</span><span class="p">:</span> <span class="n">clean_float</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"gre"</span><span class="p">),</span> <span class="s2">"gre"</span><span class="p">),</span>
+        <span class="s2">"gre_verbal"</span><span class="p">:</span> <span class="n">clean_float</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"gre_v"</span><span class="p">),</span> <span class="s2">"gre_v"</span><span class="p">),</span>
+        <span class="s2">"gre_aw"</span><span class="p">:</span> <span class="n">clean_float</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"gre_aw"</span><span class="p">),</span> <span class="s2">"gre_aw"</span><span class="p">),</span>
+        <span class="s2">"entry_id"</span><span class="p">:</span> <span class="n">entry_id_from_url</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"url"</span><span class="p">)),</span>
+        <span class="s2">"llm-generated-program"</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"llm-generated-program"</span><span class="p">),</span>
+        <span class="s2">"llm-generated-university"</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"llm-generated-university"</span><span class="p">),</span>
+    <span class="p">}</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

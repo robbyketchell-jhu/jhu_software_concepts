@@ -1,0 +1,29 @@
+$ cd module_4
+$ pytest -m "web or buttons or analysis or db or integration"
+
+........................................................................ [ 25%]
+........................................................................ [ 50%]
+........................................................................ [ 75%]
+.....................................................................    [100%]
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.12.2-final-0 _______________
+
+Name                 Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------
+src/__init__.py          1      0      0      0   100%
+src/browser.py          41      0      8      0   100%
+src/clean.py            52      0     18      0   100%
+src/config.py           38      0      8      0   100%
+src/flask_app.py       104      0      6      0   100%
+src/formatting.py       23      0      8      0   100%
+src/load_data.py        86      0     20      0   100%
+src/models.py           46      0      4      0   100%
+src/orm_queries.py      87      0      8      0   100%
+src/pull_data.py        41      0      4      0   100%
+src/query_data.py       97      0     20      0   100%
+src/scrape.py          166      0     64      0   100%
+src/standardize.py      66      0     18      0   100%
+----------------------------------------------------------------
+TOTAL                  848      0    186      0   100%
+Required test coverage of 100% reached. Total coverage: 100.00%
+285 passed in 3.15s

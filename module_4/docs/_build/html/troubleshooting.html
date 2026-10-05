@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Troubleshooting &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API reference" href="api.html" />
+    <link rel="prev" title="Operational notes" href="operations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Troubleshooting</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/troubleshooting.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h1>
+<section id="local-development">
+<h2>Local development<a class="headerlink" href="#local-development" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt><strong>``connection refused`` on port 5432</strong></dt><dd><p>PostgreSQL is not running. <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">services</span> <span class="pre">start</span> <span class="pre">postgresql&#64;17</span></code>, or start
+the Docker container. Check with
+<code class="docutils literal notranslate"><span class="pre">pg_isready</span> <span class="pre">-h</span> <span class="pre">localhost</span> <span class="pre">-p</span> <span class="pre">5432</span></code>.</p>
+</dd>
+<dt><strong>``database “gradcafe” does not exist``</strong></dt><dd><p>Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">src.load_data</span> <span class="pre">&lt;file&gt;</span></code> once; it creates the database and
+the table. Or create it by hand with <code class="docutils literal notranslate"><span class="pre">createdb</span> <span class="pre">gradcafe</span></code>.</p>
+</dd>
+<dt><strong>``role “postgres” does not exist`` on macOS</strong></dt><dd><p>Homebrew creates a role named after your macOS user, not <code class="docutils literal notranslate"><span class="pre">postgres</span></code>. Put
+your own name in <code class="docutils literal notranslate"><span class="pre">DATABASE_URL</span></code>, for example
+<code class="docutils literal notranslate"><span class="pre">postgresql+psycopg://robby&#64;localhost:5432/gradcafe</span></code>.</p>
+</dd>
+<dt><strong>The page shows “Could not read the analysis from PostgreSQL”</strong></dt><dd><p>The web layer could not reach the database. Confirm <code class="docutils literal notranslate"><span class="pre">DATABASE_URL</span></code>, that
+the server is up, and that the <code class="docutils literal notranslate"><span class="pre">applicants</span></code> table exists.</p>
+</dd>
+<dt><strong>Every number on the page is N/A</strong></dt><dd><p>The table is empty. Load the Module 2 dataset, or press Pull Data.</p>
+</dd>
+<dt><strong>Pull Data does nothing</strong></dt><dd><p>A pull is already running; the response is 409 and the button is disabled
+until <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/status</span></code> reports <code class="docutils literal notranslate"><span class="pre">running:</span> <span class="pre">false</span></code>. If a live scrape fails
+immediately, work through <a class="reference internal" href="operations.html"><span class="doc">Operational notes</span></a> - Chrome must be frontmost with
+the Cloudflare check cleared.</p>
+</dd>
+</dl>
+</section>
+<section id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt><strong>``Coverage failure: total of N is less than fail-under=100``</strong></dt><dd><p>Something in <code class="docutils literal notranslate"><span class="pre">src</span></code> is not exercised. <code class="docutils literal notranslate"><span class="pre">coverage</span> <span class="pre">report</span> <span class="pre">--show-missing</span></code>
+names the lines; <code class="docutils literal notranslate"><span class="pre">coverage</span> <span class="pre">html</span></code> gives a browsable report.</p>
+</dd>
+<dt><strong>``Module src was never imported``</strong></dt><dd><p>pytest was started from the wrong directory. Run it from <code class="docutils literal notranslate"><span class="pre">module_4</span></code>.</p>
+</dd>
+<dt><strong>Tests cannot connect to PostgreSQL</strong></dt><dd><p>The suite needs a real server. Set <code class="docutils literal notranslate"><span class="pre">TEST_DATABASE_URL</span></code> if yours is not on
+<code class="docutils literal notranslate"><span class="pre">localhost:5432</span></code>. The suite always appends <code class="docutils literal notranslate"><span class="pre">_test</span></code> to the database
+name, so it never touches development data.</p>
+</dd>
+<dt><strong>A test leaves rows behind</strong></dt><dd><p>Request the <code class="docutils literal notranslate"><span class="pre">db</span></code> fixture. It truncates <code class="docutils literal notranslate"><span class="pre">applicants</span></code> before the test
+body runs; a test that writes rows without it inherits whatever the
+previous test left.</p>
+</dd>
+</dl>
+</section>
+<section id="continuous-integration">
+<h2>Continuous integration<a class="headerlink" href="#continuous-integration" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt><strong>The Postgres service is not ready</strong></dt><dd><p>The workflow already waits on <code class="docutils literal notranslate"><span class="pre">pg_isready</span></code> through the service health
+check. If a job still fails on connection, raise <code class="docutils literal notranslate"><span class="pre">--health-retries</span></code>.</p>
+</dd>
+<dt><strong>``psycopg`` fails to build</strong></dt><dd><p>Install the binary wheel. <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> pins
+<code class="docutils literal notranslate"><span class="pre">psycopg[binary]</span></code>, which needs no local libpq.</p>
+</dd>
+<dt><strong>Coverage differs between local and CI</strong></dt><dd><p>Usually a platform-specific branch. The suite avoids them by injecting
+clocks, sleepers and subprocess runners rather than checking
+<code class="docutils literal notranslate"><span class="pre">sys.platform</span></code>.</p>
+</dd>
+</dl>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt><strong>autodoc cannot import src</strong></dt><dd><p><code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code> puts <code class="docutils literal notranslate"><span class="pre">module_4</span></code> on <code class="docutils literal notranslate"><span class="pre">sys.path</span></code>. Build from inside
+<code class="docutils literal notranslate"><span class="pre">module_4/docs</span></code> so the relative path resolves.</p>
+</dd>
+<dt><strong>Read the Docs build fails on a missing dependency</strong></dt><dd><p>The build installs <code class="docutils literal notranslate"><span class="pre">module_4/requirements.txt</span></code> via
+<code class="docutils literal notranslate"><span class="pre">.readthedocs.yaml</span></code>. Anything imported at module scope must be listed
+there.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="operations.html" class="btn btn-neutral float-left" title="Operational notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

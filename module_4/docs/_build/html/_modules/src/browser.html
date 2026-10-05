@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.browser &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.browser</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.browser</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Chrome driver used by the scraper.</span>
+
+<span class="sd">Grad Cafe sits behind Cloudflare, so pages are read out of a Chrome window</span>
+<span class="sd">that the user has already cleared by hand. The window is driven with</span>
+<span class="sd">AppleScript through ``osascript``.</span>
+
+<span class="sd">Everything that talks to Chrome lives in :class:`ChromeBrowser`. The scraper</span>
+<span class="sd">only ever calls the small interface below, which is why the tests can pass a</span>
+<span class="sd">fake browser and never launch anything:</span>
+
+<span class="sd">``navigate(url)``, ``current_html()``, ``first_result_id()``,</span>
+<span class="sd">``recycle_tab(url)``, ``ensure_window(url)``, ``title()``</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1">#: Seconds AppleScript waits before giving up on Chrome. The default of 60 is</span>
+<span class="c1">#: too short once Chrome has been running for hours.</span>
+<span class="n">APPLE_EVENT_TIMEOUT</span> <span class="o">=</span> <span class="mi">300</span>
+
+
+<div class="viewcode-block" id="BrowserError">
+<a class="viewcode-back" href="../../api.html#src.browser.BrowserError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BrowserError</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Raised when Chrome cannot be driven or does not answer."""</span></div>
+
+
+
+<div class="viewcode-block" id="ChromeBrowser">
+<a class="viewcode-back" href="../../api.html#src.browser.ChromeBrowser">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ChromeBrowser</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Drive the frontmost Chrome window through AppleScript.</span>
+
+<span class="sd">    :param timeout: seconds to allow each Apple Event.</span>
+<span class="sd">    :param runner: callable used to run ``osascript``; injected by tests.</span>
+<span class="sd">        Defaults to :func:`subprocess.run`.</span>
+<span class="sd">    :param sleeper: callable used to wait between retries; injected by tests.</span>
+<span class="sd">        Defaults to :func:`time.sleep`.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">APPLE_EVENT_TIMEOUT</span><span class="p">,</span> <span class="n">runner</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sleeper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run</span> <span class="o">=</span> <span class="n">runner</span> <span class="ow">or</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span> <span class="o">=</span> <span class="n">sleeper</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_osascript</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Run *script* with ``osascript`` and return the completed process."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">([</span><span class="s2">"osascript"</span><span class="p">,</span> <span class="s2">"-e"</span><span class="p">,</span> <span class="n">script</span><span class="p">],</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_tell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Run an AppleScript ``tell`` block, raising :class:`BrowserError`.</span>
+
+<span class="sd">        :param body: the AppleScript body to wrap in a timeout block.</span>
+<span class="sd">        :param action: short description used in the error message.</span>
+<span class="sd">        :returns: the process stdout.</span>
+<span class="sd">        """</span>
+        <span class="n">script</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'with timeout of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="si">}</span><span class="s1"> seconds</span><span class="se">\n</span><span class="si">{</span><span class="n">body</span><span class="si">}</span><span class="se">\n</span><span class="s1">end timeout</span><span class="se">\n</span><span class="s1">'</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_osascript</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BrowserError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s2"> failed: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span>
+
+<div class="viewcode-block" id="ChromeBrowser.run_js">
+<a class="viewcode-back" href="../../api.html#src.browser.ChromeBrowser.run_js">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_js</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Evaluate JavaScript in the active tab and return its result.</span>
+
+<span class="sd">        Transient Apple Event failures are retried rather than ending a long</span>
+<span class="sd">        run.</span>
+
+<span class="sd">        :param js: the JavaScript expression.</span>
+<span class="sd">        :param attempts: how many times to try before giving up.</span>
+<span class="sd">        :returns: the expression's result as text.</span>
+<span class="sd">        :raises BrowserError: when every attempt fails.</span>
+<span class="sd">        """</span>
+        <span class="n">script</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">'with timeout of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="si">}</span><span class="s1"> seconds</span><span class="se">\n</span><span class="s1">'</span>
+            <span class="s1">'  tell application "Google Chrome"</span><span class="se">\n</span><span class="s1">'</span>
+            <span class="s1">'    tell active tab of front window</span><span class="se">\n</span><span class="s1">'</span>
+            <span class="sa">f</span><span class="s1">'      execute javascript "</span><span class="si">{</span><span class="n">js</span><span class="si">}</span><span class="s1">"</span><span class="se">\n</span><span class="s1">'</span>
+            <span class="s2">"    end tell</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"  end tell</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"end timeout</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="p">)</span>
+        <span class="n">last_error</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">attempts</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_osascript</span><span class="p">(</span><span class="n">script</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span>
+            <span class="n">last_error</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">attempts</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">attempt</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">BrowserError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"osascript failed after </span><span class="si">{</span><span class="n">attempts</span><span class="si">}</span><span class="s2"> tries: </span><span class="si">{</span><span class="n">last_error</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ChromeBrowser.title">
+<a class="viewcode-back" href="../../api.html#src.browser.ChromeBrowser.title">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the active tab's document title."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_js</span><span class="p">(</span><span class="s2">"document.title"</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ChromeBrowser.current_html">
+<a class="viewcode-back" href="../../api.html#src.browser.ChromeBrowser.current_html">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">current_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the results table plus the Next link from the active tab.</span>
+
+<span class="sd">        The full document is roughly 900KB and pushing that through an Apple</span>
+<span class="sd">        Event is what causes timeouts; the table plus one anchor is about</span>
+<span class="sd">        60KB and holds everything the parser needs.</span>
+
+<span class="sd">        :returns: an HTML fragment.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_js</span><span class="p">(</span>
+            <span class="s2">"(function(){"</span>
+            <span class="s2">"var t=document.querySelector('table');"</span>
+            <span class="s2">"var n=Array.from(document.getElementsByTagName('a')).filter("</span>
+            <span class="s2">"function(a){return a.href.indexOf('cursor=')&gt;-1"</span>
+            <span class="s2">" &amp;&amp; a.textContent.indexOf('Next')&gt;-1;});"</span>
+            <span class="s2">"return (t?t.outerHTML:'')+(n.length?n[n.length-1].outerHTML:'');"</span>
+            <span class="s2">"})()"</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ChromeBrowser.first_result_id">
+<a class="viewcode-back" href="../../api.html#src.browser.ChromeBrowser.first_result_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">first_result_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Return the id of the first ``/result/`` link, or ``''`` if none yet."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_js</span><span class="p">(</span>
+            <span class="s2">"(function(){"</span>
+            <span class="s2">"var a=Array.from(document.getElementsByTagName('a')).filter("</span>
+            <span class="s2">"function(x){return x.href.indexOf('/result/')&gt;-1;});"</span>
+            <span class="s2">"return a.length?a[0].href.split('/result/')[1]:'';"</span>
+            <span class="s2">"})()"</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ChromeBrowser.navigate">
+<a class="viewcode-back" href="../../api.html#src.browser.ChromeBrowser.navigate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">navigate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Point the active tab at *url*.</span>
+
+<span class="sd">        :param url: the URL to open.</span>
+<span class="sd">        :raises BrowserError: when Chrome refuses.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tell</span><span class="p">(</span>
+            <span class="s1">'  tell application "Google Chrome"</span><span class="se">\n</span><span class="s1">'</span>
+            <span class="sa">f</span><span class="s1">'    set URL of active tab of front window to "</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">"</span><span class="se">\n</span><span class="s1">'</span>
+            <span class="s2">"  end tell"</span><span class="p">,</span>
+            <span class="s2">"navigation"</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ChromeBrowser.recycle_tab">
+<a class="viewcode-back" href="../../api.html#src.browser.ChromeBrowser.recycle_tab">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">recycle_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Open a fresh tab at *url* and close the one it replaces.</span>
+
+<span class="sd">        Navigating a single tab thousands of times leaks memory in the</span>
+<span class="sd">        renderer until Chrome stops answering Apple Events. A new tab starts</span>
+<span class="sd">        clean and keeps the Cloudflare clearance cookie. Exactly one tab is</span>
+<span class="sd">        closed, by reference, because closing the last tab in a window closes</span>
+<span class="sd">        the window and every later call then fails.</span>
+
+<span class="sd">        :param url: the URL the new tab should open.</span>
+<span class="sd">        :raises BrowserError: when Chrome refuses.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tell</span><span class="p">(</span>
+            <span class="s1">'  tell application "Google Chrome"</span><span class="se">\n</span><span class="s1">'</span>
+            <span class="s2">"    set theWindow to front window</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"    set oldTab to active tab of theWindow</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s1">'    make new tab at end of tabs of theWindow with properties </span><span class="se">{{</span><span class="s1">URL:"</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">"</span><span class="se">}}\n</span><span class="s1">'</span>
+            <span class="s2">"    set active tab index of theWindow to (count of tabs of theWindow)</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"    try</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"      close oldTab</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"    end try</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"  end tell"</span><span class="p">,</span>
+            <span class="s2">"tab recycle"</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ChromeBrowser.ensure_window">
+<a class="viewcode-back" href="../../api.html#src.browser.ChromeBrowser.ensure_window">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ensure_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Reopen a Chrome window at *url* when none is left.</span>
+
+<span class="sd">        Failures are swallowed: this is a recovery step and the caller</span>
+<span class="sd">        retries anyway.</span>
+
+<span class="sd">        :param url: the URL to open in the new window.</span>
+<span class="sd">        """</span>
+        <span class="n">script</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">'with timeout of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="si">}</span><span class="s1"> seconds</span><span class="se">\n</span><span class="s1">'</span>
+            <span class="s1">'  tell application "Google Chrome"</span><span class="se">\n</span><span class="s1">'</span>
+            <span class="s2">"    if (count of windows) is 0 then</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"      make new window</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s1">'      set URL of active tab of front window to "</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">"</span><span class="se">\n</span><span class="s1">'</span>
+            <span class="s2">"    end if</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"    activate</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"  end tell</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"end timeout</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_osascript</span><span class="p">(</span><span class="n">script</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

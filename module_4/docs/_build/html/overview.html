@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview and setup &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Architecture" href="architecture.html" />
+    <link rel="prev" title="Grad Cafe Analytics" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Overview and setup</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/overview.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="overview-and-setup">
+<h1>Overview and setup<a class="headerlink" href="#overview-and-setup" title="Link to this heading"></a></h1>
+<section id="what-the-service-does">
+<h2>What the service does<a class="headerlink" href="#what-the-service-does" title="Link to this heading"></a></h2>
+<p>The application loads self-reported Grad Café admissions results into
+PostgreSQL and publishes a single dynamic page that answers eleven analysis
+questions about them. A <em>Pull Data</em> button fetches newly posted entries; an
+<em>Update Analysis</em> button re-reads the database and redraws the page.</p>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Python 3.12</p></li>
+<li><p>PostgreSQL 14 or newer</p></li>
+<li><p>For live scraping only: macOS and Google Chrome (see
+<a class="reference internal" href="operations.html"><span class="doc">Operational notes</span></a>). Nothing in the test suite needs either.</p></li>
+</ul>
+</section>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Link to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd module_4</span>
+<span class="go">python3 -m venv venv</span>
+<span class="go">source venv/bin/activate</span>
+<span class="go">pip install -r requirements.txt</span>
+</pre></div>
+</div>
+</section>
+<section id="environment-variables">
+<h2>Environment variables<a class="headerlink" href="#environment-variables" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24.0%" />
+<col style="width: 20.0%" />
+<col style="width: 56.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DATABASE_URL</span></code></p></td>
+<td><p>built from <code class="docutils literal notranslate"><span class="pre">DB_*</span></code></p></td>
+<td><p>PostgreSQL connection URL, for example
+<code class="docutils literal notranslate"><span class="pre">postgresql+psycopg://robby&#64;localhost:5432/gradcafe</span></code>. <code class="docutils literal notranslate"><span class="pre">postgres://</span></code>
+and <code class="docutils literal notranslate"><span class="pre">postgresql://</span></code> are accepted and rewritten onto the psycopg
+driver.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TEST_DATABASE_URL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DATABASE_URL</span></code></p></td>
+<td><p>Used only by the test suite. Whatever is given, the suite appends
+<code class="docutils literal notranslate"><span class="pre">_test</span></code> to the database name, so tests can never write to the
+development database.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DB_USER</span></code>, <code class="docutils literal notranslate"><span class="pre">DB_PASSWORD</span></code>, <code class="docutils literal notranslate"><span class="pre">DB_HOST</span></code>, <code class="docutils literal notranslate"><span class="pre">DB_PORT</span></code>, <code class="docutils literal notranslate"><span class="pre">DB_NAME</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">postgres</span></code>, empty, <code class="docutils literal notranslate"><span class="pre">localhost</span></code>, <code class="docutils literal notranslate"><span class="pre">5432</span></code>, <code class="docutils literal notranslate"><span class="pre">gradcafe</span></code></p></td>
+<td><p>Used only when <code class="docutils literal notranslate"><span class="pre">DATABASE_URL</span></code> is unset. Kept for compatibility with
+the Module 3 <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PORT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5000</span></code></p></td>
+<td><p>Port for the development server.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FLASK_DEBUG</span></code></p></td>
+<td><p>unset</p></td>
+<td><p>Set to <code class="docutils literal notranslate"><span class="pre">1</span></code> to run the development server in debug mode.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Credentials are never committed. <code class="docutils literal notranslate"><span class="pre">.env</span></code> is in <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> and every value
+is read from the environment.</p>
+</section>
+<section id="set-up-the-database">
+<h2>Set up the database<a class="headerlink" href="#set-up-the-database" title="Link to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Homebrew
+<span class="go">brew install postgresql@17 &amp;&amp; brew services start postgresql@17</span>
+
+<span class="gp"># </span>or<span class="w"> </span>Docker
+<span class="go">docker run -d --name pg -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:17</span>
+</pre></div>
+</div>
+<p>Then create a <code class="docutils literal notranslate"><span class="pre">.env</span></code> beside the code:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">DATABASE_URL</span><span class="o">=</span><span class="s">postgresql+psycopg://robby@localhost:5432/gradcafe</span>
+</pre></div>
+</div>
+</section>
+<section id="load-the-module-2-dataset">
+<h2>Load the Module 2 dataset<a class="headerlink" href="#load-the-module-2-dataset" title="Link to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m src.load_data path/to/llm_extend_applicant_data_clean.json</span>
+</pre></div>
+</div>
+<p>The loader creates the database and the <code class="docutils literal notranslate"><span class="pre">applicants</span></code> table if they do not
+exist, then upserts every record on <code class="docutils literal notranslate"><span class="pre">p_id</span></code>. Running it twice never
+duplicates a row.</p>
+</section>
+<section id="run-the-analysis-from-the-console">
+<h2>Run the analysis from the console<a class="headerlink" href="#run-the-analysis-from-the-console" title="Link to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m src.query_data                 # all eleven questions, raw SQL</span>
+<span class="go">python -m src.query_data --question 8    # just one</span>
+<span class="go">python -m src.orm_queries                # the same questions via the ORM</span>
+<span class="go">python -m src.orm_queries --required     # 1, 4, 5, 8, 9 and one original</span>
+</pre></div>
+</div>
+</section>
+<section id="run-the-web-application">
+<h2>Run the web application<a class="headerlink" href="#run-the-web-application" title="Link to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m src.flask_app        # http://127.0.0.1:5000</span>
+<span class="go">PORT=5050 python -m src.flask_app</span>
+</pre></div>
+</div>
+</section>
+<section id="run-the-tests">
+<h2>Run the tests<a class="headerlink" href="#run-the-tests" title="Link to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd module_4</span>
+<span class="go">pytest                                                        # the whole suite</span>
+<span class="go">pytest -m "web or buttons or analysis or db or integration"   # identical selection</span>
+<span class="go">pytest -m db                                                  # one subsystem</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pytest.ini</span></code> turns on <code class="docutils literal notranslate"><span class="pre">pytest-cov</span></code> with <code class="docutils literal notranslate"><span class="pre">--cov-fail-under=100</span></code>, so a run
+that leaves any line of <code class="docutils literal notranslate"><span class="pre">src</span></code> untested fails. <a class="reference internal" href="testing.html"><span class="doc">Testing guide</span></a> describes the
+markers, the fixtures and the test doubles.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Grad Cafe Analytics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="architecture.html" class="btn btn-neutral float-right" title="Architecture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

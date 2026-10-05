@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.standardize &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.standardize</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.standardize</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Fill in the LLM-generated program and university names for new rows.</span>
+
+<span class="sd">Two strategies, picked at import time:</span>
+
+<span class="sd">* the Module 2 TinyLlama standardizer in ``llm_hosting/app.py``, when</span>
+<span class="sd">  ``llama-cpp-python`` and the model are installed, and</span>
+<span class="sd">* a rules-first fallback - the same split, abbreviation expansion and fuzzy</span>
+<span class="sd">  match against the canonical name lists that the standardizer itself falls</span>
+<span class="sd">  back to when the model returns something unusable.</span>
+
+<span class="sd">The fallback is pure Python with no network access, so tests exercise it</span>
+<span class="sd">directly and CI never downloads a model.</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">difflib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="c1">#: Directory holding ``canon_universities.txt`` and ``canon_programs.txt``.</span>
+<span class="n">CANON_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">HERE</span><span class="p">),</span> <span class="s2">"llm_hosting"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_llm</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Import the TinyLlama standardizer if it is available.</span>
+
+<span class="sd">    :returns: the ``_call_llm`` callable, or ``None`` when unavailable.</span>
+<span class="sd">    """</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"CANON_UNIS_PATH"</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CANON_DIR</span><span class="p">,</span> <span class="s2">"canon_universities.txt"</span><span class="p">))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"CANON_PROGS_PATH"</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CANON_DIR</span><span class="p">,</span> <span class="s2">"canon_programs.txt"</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>  <span class="c1"># pragma: no cover - depends on an optional heavyweight dependency</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">llm_hosting.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">_call_llm</span>
+
+        <span class="k">return</span> <span class="n">_call_llm</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c1"># pragma: no cover - the usual path in CI</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="c1">#: The TinyLlama entry point, or ``None`` when the model is not installed.</span>
+<span class="n">CALL_LLM</span> <span class="o">=</span> <span class="n">_load_llm</span><span class="p">()</span>
+<span class="c1">#: Whether the real model is available.</span>
+<span class="n">HAVE_LLM</span> <span class="o">=</span> <span class="n">CALL_LLM</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="read_lines">
+<a class="viewcode-back" href="../../api.html#src.standardize.read_lines">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_lines</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read non-empty, stripped lines from *path*.</span>
+
+<span class="sd">    :param path: file to read.</span>
+<span class="sd">    :returns: the list of lines, or ``[]`` when the file is missing.</span>
+<span class="sd">    """</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">handle</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+
+
+<span class="c1">#: Canonical university names used for fuzzy matching.</span>
+<span class="n">CANON_UNIS</span> <span class="o">=</span> <span class="n">read_lines</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CANON_DIR</span><span class="p">,</span> <span class="s2">"canon_universities.txt"</span><span class="p">))</span>
+<span class="c1">#: Canonical program names used for fuzzy matching.</span>
+<span class="n">CANON_PROGS</span> <span class="o">=</span> <span class="n">read_lines</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CANON_DIR</span><span class="p">,</span> <span class="s2">"canon_programs.txt"</span><span class="p">))</span>
+
+<span class="c1">#: Whole-string abbreviations expanded before matching.</span>
+<span class="n">ABBREVIATIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">r</span><span class="s2">"^mit$"</span><span class="p">:</span> <span class="s2">"Massachusetts Institute of Technology"</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">"^massachusetts institute of technology \(mit\)$"</span><span class="p">:</span> <span class="s2">"Massachusetts Institute of Technology"</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">"^cmu$"</span><span class="p">:</span> <span class="s2">"Carnegie Mellon University"</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">"^carnegie mellon$"</span><span class="p">:</span> <span class="s2">"Carnegie Mellon University"</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">"^jhu$"</span><span class="p">:</span> <span class="s2">"Johns Hopkins University"</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">"^johns hopkins$"</span><span class="p">:</span> <span class="s2">"Johns Hopkins University"</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">"^stanford$"</span><span class="p">:</span> <span class="s2">"Stanford University"</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">"^georgetown$"</span><span class="p">:</span> <span class="s2">"Georgetown University"</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">"^ubc$"</span><span class="p">:</span> <span class="s2">"University of British Columbia"</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">"^uoft$"</span><span class="p">:</span> <span class="s2">"University of Toronto"</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">"^mcg(ill)?\.?$"</span><span class="p">:</span> <span class="s2">"McGill University"</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="best_match">
+<a class="viewcode-back" href="../../api.html#src.standardize.best_match">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">best_match</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">candidates</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the closest canonical name, or ``None``.</span>
+
+<span class="sd">    :param name: the name to match.</span>
+<span class="sd">    :param candidates: canonical names to match against.</span>
+<span class="sd">    :param cutoff: minimum similarity, 0-1.</span>
+<span class="sd">    :returns: the matched name, or ``None``.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">candidates</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">get_close_matches</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">candidates</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="n">cutoff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">matches</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="normalize_university">
+<a class="viewcode-back" href="../../api.html#src.standardize.normalize_university">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">normalize_university</span><span class="p">(</span><span class="n">uni</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Expand, capitalise and canonicalise a university name.</span>
+
+<span class="sd">    :param uni: the raw university text.</span>
+<span class="sd">    :returns: the standardised name, or ``"Unknown"`` when empty.</span>
+<span class="sd">    """</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\s+"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">,</span> <span class="p">(</span><span class="n">uni</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">full</span> <span class="ow">in</span> <span class="n">ABBREVIATIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">full</span>
+            <span class="k">break</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"Unknown"</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\bOf\b"</span><span class="p">,</span> <span class="s2">"of"</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\bAnd\b"</span><span class="p">,</span> <span class="s2">"and"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">CANON_UNIS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span>
+    <span class="k">return</span> <span class="n">best_match</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">CANON_UNIS</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mf">0.86</span><span class="p">)</span> <span class="ow">or</span> <span class="n">text</span></div>
+
+
+
+<div class="viewcode-block" id="normalize_program">
+<a class="viewcode-back" href="../../api.html#src.standardize.normalize_program">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">normalize_program</span><span class="p">(</span><span class="n">prog</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Capitalise and canonicalise a program name.</span>
+
+<span class="sd">    :param prog: the raw program text.</span>
+<span class="sd">    :returns: the standardised name.</span>
+<span class="sd">    """</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\s+"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">,</span> <span class="p">(</span><span class="n">prog</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\bAnd\b"</span><span class="p">,</span> <span class="s2">"and"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\bOf\b"</span><span class="p">,</span> <span class="s2">"of"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">CANON_PROGS</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">text</span>
+    <span class="k">return</span> <span class="n">best_match</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">CANON_PROGS</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mf">0.84</span><span class="p">)</span> <span class="ow">or</span> <span class="n">text</span></div>
+
+
+
+<div class="viewcode-block" id="rules_standardize">
+<a class="viewcode-back" href="../../api.html#src.standardize.rules_standardize">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rules_standardize</span><span class="p">(</span><span class="n">program_text</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Split a combined program string into program and university.</span>
+
+<span class="sd">    ``"Computer Science, Johns Hopkins University"`` becomes</span>
+<span class="sd">    ``("Computer Science", "Johns Hopkins University")``.</span>
+
+<span class="sd">    :param program_text: the combined text.</span>
+<span class="sd">    :returns: a ``(program, university)`` tuple.</span>
+<span class="sd">    """</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\s+"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">,</span> <span class="n">program_text</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s2">","</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="n">prog</span><span class="p">,</span> <span class="n">uni</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">","</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">" at | @ "</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">prog</span><span class="p">,</span> <span class="n">uni</span> <span class="o">=</span> <span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">normalize_program</span><span class="p">(</span><span class="n">prog</span><span class="p">),</span> <span class="n">normalize_university</span><span class="p">(</span><span class="n">uni</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="standardize_text">
+<a class="viewcode-back" href="../../api.html#src.standardize.standardize_text">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">standardize_text</span><span class="p">(</span><span class="n">program_text</span><span class="p">,</span> <span class="n">call_llm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Standardise one combined program string.</span>
+
+<span class="sd">    :param program_text: the combined text.</span>
+<span class="sd">    :param call_llm: override for the TinyLlama entry point; injected by</span>
+<span class="sd">        tests. Defaults to :data:`CALL_LLM`.</span>
+<span class="sd">    :returns: a ``(program, university)`` tuple.</span>
+<span class="sd">    """</span>
+    <span class="n">call_llm</span> <span class="o">=</span> <span class="n">CALL_LLM</span> <span class="k">if</span> <span class="n">call_llm</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">call_llm</span>
+    <span class="k">if</span> <span class="n">call_llm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">call_llm</span><span class="p">(</span><span class="n">program_text</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s2">"standardized_program"</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">"standardized_university"</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>  <span class="c1"># fall through to the rules</span>
+    <span class="k">return</span> <span class="n">rules_standardize</span><span class="p">(</span><span class="n">program_text</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="standardize_rows">
+<a class="viewcode-back" href="../../api.html#src.standardize.standardize_rows">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">standardize_rows</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">call_llm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Add the two ``llm-generated-*`` keys to each cleaned row, in place.</span>
+
+<span class="sd">    :param rows: cleaned records carrying a ``program`` key.</span>
+<span class="sd">    :param call_llm: forwarded to :func:`standardize_text`.</span>
+<span class="sd">    :returns: the same list, for chaining.</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+        <span class="n">prog</span><span class="p">,</span> <span class="n">uni</span> <span class="o">=</span> <span class="n">standardize_text</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"program"</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">,</span> <span class="n">call_llm</span><span class="o">=</span><span class="n">call_llm</span><span class="p">)</span>
+        <span class="n">row</span><span class="p">[</span><span class="s2">"llm-generated-program"</span><span class="p">]</span> <span class="o">=</span> <span class="n">prog</span>
+        <span class="n">row</span><span class="p">[</span><span class="s2">"llm-generated-university"</span><span class="p">]</span> <span class="o">=</span> <span class="n">uni</span>
+    <span class="k">return</span> <span class="n">rows</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

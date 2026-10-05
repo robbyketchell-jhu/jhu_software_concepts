@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testing guide &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Operational notes" href="operations.html" />
+    <link rel="prev" title="Architecture" href="architecture.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Testing guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/testing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="testing-guide">
+<h1>Testing guide<a class="headerlink" href="#testing-guide" title="Link to this heading"></a></h1>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd module_4</span>
+<span class="go">pytest</span>
+</pre></div>
+</div>
+<p>That runs all 285 tests with coverage and fails if coverage of <code class="docutils literal notranslate"><span class="pre">src</span></code> drops
+below 100 percent.</p>
+<section id="markers">
+<h2>Markers<a class="headerlink" href="#markers" title="Link to this heading"></a></h2>
+<p>Every test carries at least one marker. There are no unmarked tests, so the
+marker expression below selects the entire suite:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pytest -m "web or buttons or analysis or db or integration"</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16.0%" />
+<col style="width: 44.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Marker</p></th>
+<th class="head"><p>Covers</p></th>
+<th class="head"><p>Files</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">web</span></code></p></td>
+<td><p>App factory, routes, page rendering, HTML structure</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">test_flask_page.py</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">buttons</span></code></p></td>
+<td><p>The two button endpoints, busy gating, error paths</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">test_buttons.py</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">analysis</span></code></p></td>
+<td><p>Labels, two-decimal formatting, the SQL and ORM query layers</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">test_analysis_format.py</span></code>, <code class="docutils literal notranslate"><span class="pre">test_query_layer.py</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">db</span></code></p></td>
+<td><p>Schema, inserts, idempotency, selects, and the ETL that feeds them</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">test_db_insert.py</span></code>, <code class="docutils literal notranslate"><span class="pre">test_etl_units.py</span></code>, <code class="docutils literal notranslate"><span class="pre">test_scrape.py</span></code>,
+<code class="docutils literal notranslate"><span class="pre">test_config_and_models.py</span></code>, <code class="docutils literal notranslate"><span class="pre">test_cli_entrypoints.py</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">integration</span></code></p></td>
+<td><p>End-to-end pull, update and render flows</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">test_integration_end_to_end.py</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Run one subsystem at a time:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pytest -m web</span>
+<span class="go">pytest -m "db and not integration"</span>
+</pre></div>
+</div>
+</section>
+<section id="the-database-the-tests-use">
+<h2>The database the tests use<a class="headerlink" href="#the-database-the-tests-use" title="Link to this heading"></a></h2>
+<p>The suite resolves its URL from <code class="docutils literal notranslate"><span class="pre">TEST_DATABASE_URL</span></code>, then <code class="docutils literal notranslate"><span class="pre">DATABASE_URL</span></code>,
+then a local default, and then <strong>appends</strong> <code class="docutils literal notranslate"><span class="pre">_test</span></code> to the database name if
+it is not already there. A run against <code class="docutils literal notranslate"><span class="pre">.../gradcafe</span></code> therefore uses
+<code class="docutils literal notranslate"><span class="pre">gradcafe_test</span></code>. The development data cannot be reached by a test.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">db</span></code> fixture truncates <code class="docutils literal notranslate"><span class="pre">applicants</span></code> before handing over a connection,
+so every test starts from an empty table.</p>
+</section>
+<section id="stable-selectors">
+<h2>Stable selectors<a class="headerlink" href="#stable-selectors" title="Link to this heading"></a></h2>
+<p>UI assertions use <code class="docutils literal notranslate"><span class="pre">data-testid</span></code> attributes rather than CSS classes or text
+positions, so restyling the page does not break the tests.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32.0%" />
+<col style="width: 68.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Selector</p></th>
+<th class="head"><p>Element</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pull-data-btn</span></code></p></td>
+<td><p>The Pull Data button</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">update-analysis-btn</span></code></p></td>
+<td><p>The Update Analysis button</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">analysis-results</span></code></p></td>
+<td><p>Container holding every result card</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">result-&lt;n&gt;</span></code></p></td>
+<td><p>The card for question <code class="docutils literal notranslate"><span class="pre">n</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">answer-value</span></code></p></td>
+<td><p>Each rendered answer value, including table cells</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">job-status</span></code></p></td>
+<td><p>The pull progress line</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">analysis-version</span></code></p></td>
+<td><p>The observable analysis counter in the header</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">analysis-error</span></code></p></td>
+<td><p>The banner shown when the database cannot be read</p></td>
+</tr>
+</tbody>
+</table>
+<p>The two button selectors are exported as
+<a class="reference internal" href="api.html#src.flask_app.PULL_BUTTON_TESTID" title="src.flask_app.PULL_BUTTON_TESTID"><code class="xref py py-data docutils literal notranslate"><span class="pre">src.flask_app.PULL_BUTTON_TESTID</span></code></a> and
+<a class="reference internal" href="api.html#src.flask_app.UPDATE_BUTTON_TESTID" title="src.flask_app.UPDATE_BUTTON_TESTID"><code class="xref py py-data docutils literal notranslate"><span class="pre">src.flask_app.UPDATE_BUTTON_TESTID</span></code></a>, so a test never hard-codes them.</p>
+</section>
+<section id="fixtures">
+<h2>Fixtures<a class="headerlink" href="#fixtures" title="Link to this heading"></a></h2>
+<p>Defined in <code class="docutils literal notranslate"><span class="pre">tests/conftest.py</span></code>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24.0%" />
+<col style="width: 76.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Fixture</p></th>
+<th class="head"><p>What it gives you</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">database_url</span></code></p></td>
+<td><p>Session scoped. Creates the test database and table, exports
+<code class="docutils literal notranslate"><span class="pre">DATABASE_URL</span></code> and points the ORM engine at it.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">db</span></code></p></td>
+<td><p>Truncates <code class="docutils literal notranslate"><span class="pre">applicants</span></code> and yields an open psycopg connection.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">row_count</span></code></p></td>
+<td><p>A callable returning the current row count.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fake_scraper</span></code></p></td>
+<td><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">FakeScraper</span></code> over the four canned records.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">recording_loader</span></code></p></td>
+<td><p>The real loader, wrapped so a test can see what it received.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">app</span></code> / <code class="docutils literal notranslate"><span class="pre">client</span></code></p></td>
+<td><p>An app wired to the fakes and the test database, with
+<code class="docutils literal notranslate"><span class="pre">run_async=False</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">static_app</span></code> / <code class="docutils literal notranslate"><span class="pre">static_client</span></code></p></td>
+<td><p>An app whose analysis provider returns a fixed payload, for tests that
+should not depend on database contents.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="test-doubles">
+<h2>Test doubles<a class="headerlink" href="#test-doubles" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">FakeScraper</span></code></dt><dd><p>Returns a fixed list of raw records and records how it was called. It
+mirrors the real scraper by filtering out URLs that are already known, so
+idempotency tests behave the way production does. Set <code class="docutils literal notranslate"><span class="pre">error=</span></code> to make it
+raise.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">RecordingLoader</span></code></dt><dd><p>Wraps the real loader, counting calls and keeping the rows it was handed,
+so a test can assert that the scraper’s output actually reached the loader.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">FakeBrowser</span></code> (in <code class="docutils literal notranslate"><span class="pre">test_scrape.py</span></code>)</dt><dd><p>Implements the six-method browser interface over canned HTML. Nothing
+launches Chrome.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">FakeRunner</span></code> (in <code class="docutils literal notranslate"><span class="pre">test_scrape.py</span></code>)</dt><dd><p>Stands in for <code class="docutils literal notranslate"><span class="pre">subprocess.run</span></code> so the AppleScript driver can be tested
+without <code class="docutils literal notranslate"><span class="pre">osascript</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">FakeHttp</span></code> / <code class="docutils literal notranslate"><span class="pre">FakeResponse</span></code> (in <code class="docutils literal notranslate"><span class="pre">test_scrape.py</span></code>)</dt><dd><p>Stand in for <code class="docutils literal notranslate"><span class="pre">urllib3</span></code> when checking <code class="docutils literal notranslate"><span class="pre">robots.txt</span></code>.</p>
+</dd>
+</dl>
+</section>
+<section id="determinism">
+<h2>Determinism<a class="headerlink" href="#determinism" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>No test reaches the network or launches a browser.</p></li>
+<li><p>No test calls <code class="docutils literal notranslate"><span class="pre">sleep</span></code>. Busy state is exercised by calling
+<a class="reference internal" href="api.html#src.flask_app.PullState.begin" title="src.flask_app.PullState.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">src.flask_app.PullState.begin()</span></code></a> directly, and every waiting loop takes
+injectable <code class="docutils literal notranslate"><span class="pre">clock</span></code> and <code class="docutils literal notranslate"><span class="pre">sleeper</span></code> callables.</p></li>
+<li><p>Apps under test use <code class="docutils literal notranslate"><span class="pre">run_async=False</span></code>, so a pull finishes inside the
+request.</p></li>
+<li><p>The whole suite runs in a few seconds.</p></li>
+</ul>
+</section>
+<section id="coverage">
+<h2>Coverage<a class="headerlink" href="#coverage" title="Link to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pytest                       # enforces 100 percent</span>
+<span class="go">coverage report --show-missing</span>
+<span class="go">coverage html &amp;&amp; open htmlcov/index.html</span>
+</pre></div>
+</div>
+<p>The committed summary lives in <code class="docutils literal notranslate"><span class="pre">module_4/coverage_summary.txt</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="architecture.html" class="btn btn-neutral float-left" title="Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="operations.html" class="btn btn-neutral float-right" title="Operational notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

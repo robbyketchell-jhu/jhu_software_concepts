@@ -1,0 +1,778 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Index &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Index</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.standardize.ABBREVIATIONS">ABBREVIATIONS (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.flask_app.PullState.analysis_refreshed_at">analysis_refreshed_at (src.flask_app.PullState attribute)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.analysis_results">analysis_results() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.query_data.analysis_summary">analysis_summary() (in module src.query_data)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.flask_app.PullState.analysis_version">analysis_version (src.flask_app.PullState attribute)</a>
+</li>
+      <li><a href="api.html#src.browser.APPLE_EVENT_TIMEOUT">APPLE_EVENT_TIMEOUT (in module src.browser)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant">Applicant (class in src.models)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.as_dict">as_dict() (src.models.Applicant method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.models.Base">Base (class in src.models)</a>
+</li>
+      <li><a href="api.html#src.scrape.BASE_URL">BASE_URL (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.flask_app.PullState.begin">begin() (src.flask_app.PullState method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.standardize.best_match">best_match() (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.browser.BrowserError">BrowserError</a>
+</li>
+      <li><a href="api.html#src.scrape.build_url">build_url() (in module src.scrape)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.standardize.CALL_LLM">CALL_LLM (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.standardize.CANON_DIR">CANON_DIR (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.standardize.CANON_PROGS">CANON_PROGS (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.standardize.CANON_UNIS">CANON_UNIS (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.scrape.check_robots">check_robots() (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.browser.ChromeBrowser">ChromeBrowser (class in src.browser)</a>
+</li>
+      <li><a href="api.html#src.clean.clean_date">clean_date() (in module src.clean)</a>
+</li>
+      <li><a href="api.html#src.clean.clean_float">clean_float() (in module src.clean)</a>
+</li>
+      <li><a href="api.html#src.clean.clean_int">clean_int() (in module src.clean)</a>
+</li>
+      <li><a href="api.html#src.pull_data.clean_records">clean_records() (in module src.pull_data)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.clean.clean_scraped_record">clean_scraped_record() (in module src.clean)</a>
+</li>
+      <li><a href="api.html#src.clean.clean_text">clean_text() (in module src.clean)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.collect_results">collect_results() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.load_data.COLUMNS">COLUMNS (in module src.load_data)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.comments">comments (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.load_data.connect">connect() (in module src.load_data)</a>
+
+      <ul>
+        <li><a href="api.html#src.query_data.connect">(in module src.query_data)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#src.models.create_all">create_all() (in module src.models)</a>
+</li>
+      <li><a href="api.html#src.flask_app.create_app">create_app() (in module src.flask_app)</a>
+</li>
+      <li><a href="api.html#src.load_data.CREATE_TABLE">CREATE_TABLE (in module src.load_data)</a>
+</li>
+      <li><a href="api.html#src.browser.ChromeBrowser.current_html">current_html() (src.browser.ChromeBrowser method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.config.database_name">database_name() (in module src.config)</a>
+</li>
+      <li><a href="api.html#src.config.database_url">database_url() (in module src.config)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.date_added">date_added (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.clean.DATE_FORMATS">DATE_FORMATS (in module src.clean)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.scrape.DECISIONS">DECISIONS (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.config.DEFAULTS">DEFAULTS (in module src.config)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.degree">degree (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.config.DRIVER">DRIVER (in module src.config)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.load_data.ensure_database">ensure_database() (in module src.load_data)</a>
+</li>
+      <li><a href="api.html#src.load_data.ensure_table">ensure_table() (in module src.load_data)</a>
+</li>
+      <li><a href="api.html#src.browser.ChromeBrowser.ensure_window">ensure_window() (src.browser.ChromeBrowser method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.clean.entry_id_from_url">entry_id_from_url() (in module src.clean)</a>
+</li>
+      <li><a href="api.html#src.query_data.execute_query">execute_query() (in module src.query_data)</a>
+</li>
+      <li><a href="api.html#src.query_data.Question.explanation">explanation (src.query_data.Question attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.query_data.fetch_applicant">fetch_applicant() (in module src.query_data)</a>
+</li>
+      <li><a href="api.html#src.query_data.fetch_applicants">fetch_applicants() (in module src.query_data)</a>
+</li>
+      <li><a href="api.html#src.scrape.fetch_robots_txt">fetch_robots_txt() (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.scrape.find_next_url">find_next_url() (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.flask_app.PullState.finish">finish() (src.flask_app.PullState method)</a>
+</li>
+      <li><a href="api.html#src.browser.ChromeBrowser.first_result_id">first_result_id() (src.browser.ChromeBrowser method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.formatting.fmt_avg">fmt_avg() (in module src.formatting)</a>
+</li>
+      <li><a href="api.html#src.formatting.fmt_count">fmt_count() (in module src.formatting)</a>
+</li>
+      <li><a href="api.html#src.formatting.fmt_pct">fmt_pct() (in module src.formatting)</a>
+</li>
+      <li><a href="api.html#src.formatting.fmt_signed">fmt_signed() (in module src.formatting)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.format_result">format_result() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.query_data.format_results">format_results() (in module src.query_data)</a>
+</li>
+      <li><a href="api.html#src.formatting.format_value">format_value() (in module src.formatting)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.models.get_engine">get_engine() (in module src.models)</a>
+</li>
+      <li><a href="api.html#src.flask_app.get_services">get_services() (in module src.flask_app)</a>
+</li>
+      <li><a href="api.html#src.models.get_session">get_session() (in module src.models)</a>
+</li>
+      <li><a href="api.html#src.models.get_session_factory">get_session_factory() (in module src.models)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.models.Applicant.gpa">gpa (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.gre">gre (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.gre_aw">gre_aw (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.gre_v">gre_v (src.models.Applicant attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.standardize.HAVE_LLM">HAVE_LLM (in module src.standardize)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.load_data.INSERT">INSERT (in module src.load_data)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.formatting.is_percent">is_percent() (in module src.formatting)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.pull_data.known_urls">known_urls() (in module src.pull_data)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.models.Applicant.llm_generated_program">llm_generated_program (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.llm_generated_university">llm_generated_university (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.config.load_environment">load_environment() (in module src.config)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.load_data.load_records">load_records() (in module src.load_data)</a>
+</li>
+      <li><a href="api.html#src.scrape.load_saved">load_saved() (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.scrape.LOAD_TIMEOUT">LOAD_TIMEOUT (in module src.scrape)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.flask_app.main">main() (in module src.flask_app)</a>
+
+      <ul>
+        <li><a href="api.html#src.load_data.main">(in module src.load_data)</a>
+</li>
+        <li><a href="api.html#src.orm_queries.main">(in module src.orm_queries)</a>
+</li>
+        <li><a href="api.html#src.pull_data.main">(in module src.pull_data)</a>
+</li>
+        <li><a href="api.html#src.query_data.main">(in module src.query_data)</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#src.models.Base.metadata">metadata (src.models.Base attribute)</a>
+</li>
+      <li><a href="api.html#src.formatting.MISSING">MISSING (in module src.formatting)</a>
+</li>
+      <li><a href="api.html#src.clean.MISSING_DATA_VALUES">MISSING_DATA_VALUES (in module src.clean)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="api.html#module-src.browser">src.browser</a>
+</li>
+        <li><a href="api.html#module-src.clean">src.clean</a>
+</li>
+        <li><a href="api.html#module-src.config">src.config</a>
+</li>
+        <li><a href="api.html#module-src.flask_app">src.flask_app</a>
+</li>
+        <li><a href="api.html#module-src.formatting">src.formatting</a>
+</li>
+        <li><a href="api.html#module-src.load_data">src.load_data</a>
+</li>
+        <li><a href="api.html#module-src.models">src.models</a>
+</li>
+        <li><a href="api.html#module-src.orm_queries">src.orm_queries</a>
+</li>
+        <li><a href="api.html#module-src.pull_data">src.pull_data</a>
+</li>
+        <li><a href="api.html#module-src.query_data">src.query_data</a>
+</li>
+        <li><a href="api.html#module-src.scrape">src.scrape</a>
+</li>
+        <li><a href="api.html#module-src.standardize">src.standardize</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.browser.ChromeBrowser.navigate">navigate() (src.browser.ChromeBrowser method)</a>
+</li>
+      <li><a href="api.html#src.standardize.normalize_program">normalize_program() (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.standardize.normalize_university">normalize_university() (in module src.standardize)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.config.normalize_url">normalize_url() (in module src.config)</a>
+</li>
+      <li><a href="api.html#src.flask_app.PullState.note_analysis">note_analysis() (src.flask_app.PullState method)</a>
+</li>
+      <li><a href="api.html#src.query_data.Question.number">number (src.query_data.Question attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.models.Applicant.p_id">p_id (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.scrape.PAGE_PAUSE">PAGE_PAUSE (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.scrape.parse_decision">parse_decision() (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.scrape.parse_tags">parse_tags() (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.load_data.pick">pick() (in module src.load_data)</a>
+</li>
+      <li><a href="api.html#src.scrape.POLL_INTERVAL">POLL_INTERVAL (in module src.scrape)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.clean.POSSIBLE_SCORES">POSSIBLE_SCORES (in module src.clean)</a>
+</li>
+      <li><a href="api.html#src.query_data.print_results">print_results() (in module src.query_data)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.program">program (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.config.psycopg_conninfo">psycopg_conninfo() (in module src.config)</a>
+</li>
+      <li><a href="api.html#src.flask_app.PULL_BUTTON_TESTID">PULL_BUTTON_TESTID (in module src.flask_app)</a>
+</li>
+      <li><a href="api.html#src.pull_data.pull_new_records">pull_new_records() (in module src.pull_data)</a>
+</li>
+      <li><a href="api.html#src.flask_app.PullState">PullState (class in src.flask_app)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.orm_queries.q10_acceptance_by_nationality">q10_acceptance_by_nationality() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.q11_top_universities">q11_top_universities() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.q1_fall_2026_count">q1_fall_2026_count() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.q2_percent_international">q2_percent_international() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.q3_averages">q3_averages() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.q4_avg_gpa_american_fall_2026">q4_avg_gpa_american_fall_2026() (in module src.orm_queries)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.orm_queries.q5_fall_2025_acceptance_percent">q5_fall_2025_acceptance_percent() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.q6_avg_gpa_accepted_fall_2026">q6_avg_gpa_accepted_fall_2026() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.q7_jhu_cs_masters_count">q7_jhu_cs_masters_count() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.q8_cs_phd_acceptances_original">q8_cs_phd_acceptances_original() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.q9_cs_phd_acceptances_llm">q9_cs_phd_acceptances_llm() (in module src.orm_queries)</a>
+</li>
+      <li><a href="api.html#src.query_data.Question">Question (class in src.query_data)</a>
+</li>
+      <li><a href="api.html#src.query_data.QUESTIONS">QUESTIONS (in module src.query_data)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.standardize.read_lines">read_lines() (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.load_data.read_records">read_records() (in module src.load_data)</a>
+</li>
+      <li><a href="api.html#src.scrape.RECYCLE_EVERY">RECYCLE_EVERY (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.browser.ChromeBrowser.recycle_tab">recycle_tab() (src.browser.ChromeBrowser method)</a>
+</li>
+      <li><a href="api.html#src.flask_app.register_routes">register_routes() (in module src.flask_app)</a>
+</li>
+      <li><a href="api.html#src.models.Base.registry">registry (src.models.Base attribute)</a>
+</li>
+      <li><a href="api.html#src.orm_queries.REQUIRED">REQUIRED (in module src.orm_queries)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.query_data.REQUIRED_FIELDS">REQUIRED_FIELDS (in module src.query_data)</a>
+</li>
+      <li><a href="api.html#src.models.reset_engine">reset_engine() (in module src.models)</a>
+</li>
+      <li><a href="api.html#src.standardize.rules_standardize">rules_standardize() (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.query_data.run_all">run_all() (in module src.query_data)</a>
+</li>
+      <li><a href="api.html#src.browser.ChromeBrowser.run_js">run_js() (src.browser.ChromeBrowser method)</a>
+</li>
+      <li><a href="api.html#src.flask_app.Services.run_pull">run_pull() (src.flask_app.Services method)</a>
+</li>
+      <li><a href="api.html#src.query_data.run_query">run_query() (in module src.query_data)</a>
+</li>
+      <li><a href="api.html#src.query_data.run_question">run_question() (in module src.query_data)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.scrape.save_data">save_data() (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.scrape.scrape_data">scrape_data() (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.scrape.scrape_pages">scrape_pages() (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.scrape.ScrapeError">ScrapeError</a>
+</li>
+      <li><a href="api.html#src.scrape.SEASON_RE">SEASON_RE (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.flask_app.Services">Services (class in src.flask_app)</a>
+</li>
+      <li><a href="api.html#src.flask_app.PullState.snapshot">snapshot() (src.flask_app.PullState method)</a>
+</li>
+      <li><a href="api.html#src.query_data.Question.sql">sql (src.query_data.Question attribute)</a>
+</li>
+      <li>
+    src.browser
+
+      <ul>
+        <li><a href="api.html#module-src.browser">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.clean
+
+      <ul>
+        <li><a href="api.html#module-src.clean">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.config
+
+      <ul>
+        <li><a href="api.html#module-src.config">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.flask_app
+
+      <ul>
+        <li><a href="api.html#module-src.flask_app">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.formatting
+
+      <ul>
+        <li><a href="api.html#module-src.formatting">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    src.load_data
+
+      <ul>
+        <li><a href="api.html#module-src.load_data">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.models
+
+      <ul>
+        <li><a href="api.html#module-src.models">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.orm_queries
+
+      <ul>
+        <li><a href="api.html#module-src.orm_queries">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.pull_data
+
+      <ul>
+        <li><a href="api.html#module-src.pull_data">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.query_data
+
+      <ul>
+        <li><a href="api.html#module-src.query_data">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.scrape
+
+      <ul>
+        <li><a href="api.html#module-src.scrape">module</a>
+</li>
+      </ul></li>
+      <li>
+    src.standardize
+
+      <ul>
+        <li><a href="api.html#module-src.standardize">module</a>
+</li>
+      </ul></li>
+      <li><a href="api.html#src.standardize.standardize_rows">standardize_rows() (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.standardize.standardize_text">standardize_text() (in module src.standardize)</a>
+</li>
+      <li><a href="api.html#src.scrape.START_PATH">START_PATH (in module src.scrape)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.status">status (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.scrape.STUDENT_TYPES">STUDENT_TYPES (in module src.scrape)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.models.Applicant.term">term (src.models.Applicant attribute)</a>
+</li>
+      <li><a href="api.html#src.query_data.Question.title">title (src.query_data.Question attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.browser.ChromeBrowser.title">title() (src.browser.ChromeBrowser method)</a>
+</li>
+      <li><a href="api.html#src.load_data.to_row">to_row() (in module src.load_data)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.flask_app.UPDATE_BUTTON_TESTID">UPDATE_BUTTON_TESTID (in module src.flask_app)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.url">url (src.models.Applicant attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.config.url_for_database">url_for_database() (in module src.config)</a>
+</li>
+      <li><a href="api.html#src.models.Applicant.us_or_international">us_or_international (src.models.Applicant attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#src.scrape.wait_for_results">wait_for_results() (in module src.scrape)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

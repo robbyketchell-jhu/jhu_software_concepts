@@ -1,0 +1,560 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.scrape &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations.html">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../operations.html#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.scrape</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.scrape</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Grad Cafe scraper.</span>
+
+<span class="sd">The module keeps three concerns apart so that each can be tested on its own:</span>
+
+<span class="sd">* **URLs and robots** - built and validated with ``urllib3``.</span>
+<span class="sd">* **Parsing** - pure functions over HTML text, using BeautifulSoup.</span>
+<span class="sd">* **Paging** - :func:`scrape_pages` walks the result pages using an injected</span>
+<span class="sd">  browser object, so tests pass a fake and nothing ever reaches the network.</span>
+
+<span class="sd">Live use still needs the Module 2 setup: allow JavaScript from Apple Events</span>
+<span class="sd">in Chrome, open the survey page and clear the Cloudflare check, then leave</span>
+<span class="sd">that window frontmost.</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.robotparser</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.browser</span><span class="w"> </span><span class="kn">import</span> <span class="n">BrowserError</span><span class="p">,</span> <span class="n">ChromeBrowser</span>
+
+<span class="c1">#: Root of the site being scraped.</span>
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">"https://www.thegradcafe.com"</span>
+<span class="c1">#: Path of the results listing.</span>
+<span class="n">START_PATH</span> <span class="o">=</span> <span class="s2">"/survey"</span>
+<span class="c1">#: Courtesy pause between pages, in seconds.</span>
+<span class="n">PAGE_PAUSE</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="c1">#: Maximum seconds to wait for one page to render.</span>
+<span class="n">LOAD_TIMEOUT</span> <span class="o">=</span> <span class="mf">45.0</span>
+<span class="c1">#: How often to open a fresh tab, in pages.</span>
+<span class="n">RECYCLE_EVERY</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="c1">#: Seconds between render checks.</span>
+<span class="n">POLL_INTERVAL</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+<span class="c1">#: Decision words Grad Cafe uses in the status cell.</span>
+<span class="n">DECISIONS</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"Accepted"</span><span class="p">,</span> <span class="s2">"Rejected"</span><span class="p">,</span> <span class="s2">"Interview"</span><span class="p">,</span> <span class="s2">"Wait listed"</span><span class="p">)</span>
+<span class="c1">#: Student type badges.</span>
+<span class="n">STUDENT_TYPES</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"American"</span><span class="p">,</span> <span class="s2">"International"</span><span class="p">,</span> <span class="s2">"Other"</span><span class="p">)</span>
+
+<span class="c1">#: Matches a term badge such as ``"Fall 2026"``.</span>
+<span class="n">SEASON_RE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"^(Fall|Spring|Summer|Winter)\s+\d</span><span class="si">{4}</span><span class="s2">$"</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ScrapeError">
+<a class="viewcode-back" href="../../api.html#src.scrape.ScrapeError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ScrapeError</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Raised when scraping cannot continue."""</span></div>
+
+
+
+<div class="viewcode-block" id="build_url">
+<a class="viewcode-back" href="../../api.html#src.scrape.build_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_url</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">START_PATH</span><span class="p">,</span> <span class="n">cursor</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Build and validate a Grad Cafe URL.</span>
+
+<span class="sd">    :param path: path below :data:`BASE_URL`.</span>
+<span class="sd">    :param cursor: optional paging cursor.</span>
+<span class="sd">    :returns: the absolute URL.</span>
+<span class="sd">    :raises ValueError: when the URL would point at another host.</span>
+<span class="sd">    """</span>
+    <span class="n">parsed</span> <span class="o">=</span> <span class="n">urllib3</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">parse_url</span><span class="p">(</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">parsed</span><span class="o">.</span><span class="n">host</span> <span class="o">!=</span> <span class="s2">"www.thegradcafe.com"</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"refusing to build URL for </span><span class="si">{</span><span class="n">parsed</span><span class="o">.</span><span class="n">host</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">?cursor=</span><span class="si">{</span><span class="n">cursor</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">cursor</span> <span class="k">else</span> <span class="n">url</span></div>
+
+
+
+<div class="viewcode-block" id="fetch_robots_txt">
+<a class="viewcode-back" href="../../api.html#src.scrape.fetch_robots_txt">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fetch_robots_txt</span><span class="p">(</span><span class="n">http</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Fetch ``robots.txt``.</span>
+
+<span class="sd">    :param http: a ``urllib3`` pool manager; injected by tests.</span>
+<span class="sd">    :returns: a ``(status_code, text)`` tuple.</span>
+<span class="sd">    """</span>
+    <span class="n">http</span> <span class="o">=</span> <span class="n">http</span> <span class="ow">or</span> <span class="n">urllib3</span><span class="o">.</span><span class="n">PoolManager</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">urllib3</span><span class="o">.</span><span class="n">Timeout</span><span class="p">(</span><span class="n">connect</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">read</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}</span><span class="s2">/robots.txt"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">"replace"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="check_robots">
+<a class="viewcode-back" href="../../api.html#src.scrape.check_robots">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_robots</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">START_PATH</span><span class="p">,</span> <span class="n">user_agent</span><span class="o">=</span><span class="s2">"*"</span><span class="p">,</span> <span class="n">http</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Confirm ``robots.txt`` permits *path* before scraping.</span>
+
+<span class="sd">    :param path: the path to check.</span>
+<span class="sd">    :param user_agent: user agent to check the rules for.</span>
+<span class="sd">    :param http: a ``urllib3`` pool manager; injected by tests.</span>
+<span class="sd">    :returns: an ``(allowed, crawl_delay)`` tuple.</span>
+<span class="sd">    :raises ScrapeError: when ``robots.txt`` cannot be read.</span>
+<span class="sd">    """</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">status</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="n">fetch_robots_txt</span><span class="p">(</span><span class="n">http</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ScrapeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Could not fetch </span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}</span><span class="s2">/robots.txt (</span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">)."</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+
+    <span class="k">if</span> <span class="n">status</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ScrapeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"robots.txt returned HTTP </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">robotparser</span><span class="o">.</span><span class="n">RobotFileParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">build_url</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">can_fetch</span><span class="p">(</span><span class="n">user_agent</span><span class="p">,</span> <span class="n">url</span><span class="p">),</span> <span class="n">parser</span><span class="o">.</span><span class="n">crawl_delay</span><span class="p">(</span><span class="n">user_agent</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="parse_decision">
+<a class="viewcode-back" href="../../api.html#src.scrape.parse_decision">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_decision</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Split a status cell into its decision and date.</span>
+
+<span class="sd">    ``"Accepted on Sep 11"`` becomes ``("Accepted", "Sep 11")``.</span>
+
+<span class="sd">    :param text: the cell text.</span>
+<span class="sd">    :returns: a ``(decision, date)`` tuple, both ``None`` when unrecognised.</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">decision</span> <span class="ow">in</span> <span class="n">DECISIONS</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">decision</span><span class="p">):</span>
+            <span class="n">rest</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">decision</span><span class="p">):]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">date</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">rest</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"on "</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">decision</span><span class="p">,</span> <span class="n">date</span>
+    <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="parse_tags">
+<a class="viewcode-back" href="../../api.html#src.scrape.parse_tags">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_tags</span><span class="p">(</span><span class="n">tag_row</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read the badge row into *record*: term, student type, GRE scores, GPA.</span>
+
+<span class="sd">    :param tag_row: the ``&lt;tr&gt;`` holding the badges.</span>
+<span class="sd">    :param record: the record dict to update in place.</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">badge</span> <span class="ow">in</span> <span class="n">tag_row</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"div div"</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">badge</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">SEASON_RE</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+            <span class="n">record</span><span class="p">[</span><span class="s2">"semester_start"</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="k">elif</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">STUDENT_TYPES</span><span class="p">:</span>
+            <span class="n">record</span><span class="p">[</span><span class="s2">"student_type"</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"GRE AW"</span><span class="p">):</span>
+            <span class="n">record</span><span class="p">[</span><span class="s2">"gre_aw"</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"GRE V"</span><span class="p">):</span>
+            <span class="n">record</span><span class="p">[</span><span class="s2">"gre_v"</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"GRE"</span><span class="p">):</span>
+            <span class="n">record</span><span class="p">[</span><span class="s2">"gre"</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"GPA"</span><span class="p">):</span>
+            <span class="n">record</span><span class="p">[</span><span class="s2">"gpa"</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="scrape_data">
+<a class="viewcode-back" href="../../api.html#src.scrape.scrape_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">scrape_data</span><span class="p">(</span><span class="n">html</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Pull every applicant record out of one results page.</span>
+
+<span class="sd">    :param html: the page HTML (or the table fragment the browser returns).</span>
+<span class="sd">    :returns: a list of raw record dicts.</span>
+<span class="sd">    """</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s2">"html.parser"</span><span class="p">)</span>
+    <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">"a"</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="ow">and</span> <span class="s2">"/result/"</span> <span class="ow">in</span> <span class="n">h</span><span class="p">):</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">find_parent</span><span class="p">(</span><span class="s2">"tr"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">cells</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">"td"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cells</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">href</span> <span class="o">=</span> <span class="n">link</span><span class="p">[</span><span class="s2">"href"</span><span class="p">]</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"university"</span><span class="p">:</span> <span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="s2">"program"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"degree"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"date_added"</span><span class="p">:</span> <span class="n">cells</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="s2">"url"</span><span class="p">:</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">href</span> <span class="k">if</span> <span class="n">href</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span> <span class="k">else</span> <span class="n">href</span><span class="p">,</span>
+            <span class="s2">"status"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"accept_date"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"reject_date"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"semester_start"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"student_type"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"gre"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"gre_v"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"gre_aw"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"gpa"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"comments"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="c1"># Raw source text, kept verbatim for traceability.</span>
+            <span class="s2">"raw_main_row"</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="s2">" | "</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="s2">"raw_tag_row"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"raw_comment_row"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">spans</span> <span class="o">=</span> <span class="n">cells</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">"span"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">spans</span><span class="p">:</span>
+            <span class="n">record</span><span class="p">[</span><span class="s2">"program"</span><span class="p">]</span> <span class="o">=</span> <span class="n">spans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">spans</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">record</span><span class="p">[</span><span class="s2">"degree"</span><span class="p">]</span> <span class="o">=</span> <span class="n">spans</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">decision</span><span class="p">,</span> <span class="n">date</span> <span class="o">=</span> <span class="n">parse_decision</span><span class="p">(</span><span class="n">cells</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="n">record</span><span class="p">[</span><span class="s2">"status"</span><span class="p">]</span> <span class="o">=</span> <span class="n">decision</span>
+        <span class="k">if</span> <span class="n">decision</span> <span class="o">==</span> <span class="s2">"Accepted"</span><span class="p">:</span>
+            <span class="n">record</span><span class="p">[</span><span class="s2">"accept_date"</span><span class="p">]</span> <span class="o">=</span> <span class="n">date</span>
+        <span class="k">elif</span> <span class="n">decision</span> <span class="o">==</span> <span class="s2">"Rejected"</span><span class="p">:</span>
+            <span class="n">record</span><span class="p">[</span><span class="s2">"reject_date"</span><span class="p">]</span> <span class="o">=</span> <span class="n">date</span>
+
+        <span class="n">tag_row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find_next_sibling</span><span class="p">(</span><span class="s2">"tr"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tag_row</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">tag_row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"a"</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="n">h</span> <span class="ow">and</span> <span class="s2">"/result/"</span> <span class="ow">in</span> <span class="n">h</span><span class="p">):</span>
+            <span class="n">record</span><span class="p">[</span><span class="s2">"raw_tag_row"</span><span class="p">]</span> <span class="o">=</span> <span class="n">tag_row</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="s2">" | "</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">parse_tags</span><span class="p">(</span><span class="n">tag_row</span><span class="p">,</span> <span class="n">record</span><span class="p">)</span>
+
+            <span class="n">comment_row</span> <span class="o">=</span> <span class="n">tag_row</span><span class="o">.</span><span class="n">find_next_sibling</span><span class="p">(</span><span class="s2">"tr"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">comment_row</span> <span class="ow">and</span> <span class="n">comment_row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"p"</span><span class="p">):</span>
+                <span class="n">paragraph</span> <span class="o">=</span> <span class="n">comment_row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"p"</span><span class="p">)</span>
+                <span class="n">record</span><span class="p">[</span><span class="s2">"raw_comment_row"</span><span class="p">]</span> <span class="o">=</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">record</span><span class="p">[</span><span class="s2">"comments"</span><span class="p">]</span> <span class="o">=</span> <span class="n">paragraph</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">records</span></div>
+
+
+
+<div class="viewcode-block" id="find_next_url">
+<a class="viewcode-back" href="../../api.html#src.scrape.find_next_url">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_next_url</span><span class="p">(</span><span class="n">html</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return the "Next" link's URL, or ``None`` on the last page.</span>
+
+<span class="sd">    Matched on link text rather than an exact string because the anchor</span>
+<span class="sd">    contains an inline SVG arrow.</span>
+
+<span class="sd">    :param html: the page HTML.</span>
+<span class="sd">    :returns: the absolute URL of the next page, or ``None``.</span>
+<span class="sd">    """</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s2">"html.parser"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">anchor</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">"a"</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">"Next"</span> <span class="ow">in</span> <span class="n">anchor</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span> <span class="ow">and</span> <span class="s2">"cursor="</span> <span class="ow">in</span> <span class="n">anchor</span><span class="p">[</span><span class="s2">"href"</span><span class="p">]:</span>
+            <span class="n">href</span> <span class="o">=</span> <span class="n">anchor</span><span class="p">[</span><span class="s2">"href"</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">href</span> <span class="k">if</span> <span class="n">href</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span> <span class="k">else</span> <span class="n">href</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="wait_for_results">
+<a class="viewcode-back" href="../../api.html#src.scrape.wait_for_results">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">wait_for_results</span><span class="p">(</span><span class="n">browser</span><span class="p">,</span> <span class="n">previous_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">LOAD_TIMEOUT</span><span class="p">,</span>
+                     <span class="n">poll</span><span class="o">=</span><span class="n">POLL_INTERVAL</span><span class="p">,</span> <span class="n">clock</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sleeper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Block until the tab shows a freshly rendered results page.</span>
+
+<span class="sd">    Grad Cafe is a single page app, so after navigating the previous page's</span>
+<span class="sd">    rows are often still in the DOM. When the caller knows what the previous</span>
+<span class="sd">    page started with, this waits for that first id to change.</span>
+
+<span class="sd">    :param browser: an object exposing ``title()`` and ``first_result_id()``.</span>
+<span class="sd">    :param previous_id: the first result id of the page being replaced.</span>
+<span class="sd">    :param timeout: seconds to wait before giving up.</span>
+<span class="sd">    :param poll: seconds between checks.</span>
+<span class="sd">    :param clock: callable returning the current time; injected by tests.</span>
+<span class="sd">    :param sleeper: callable used to wait; injected by tests.</span>
+<span class="sd">    :returns: the first result id now on the page.</span>
+<span class="sd">    :raises ScrapeError: on a Cloudflare challenge or a render timeout.</span>
+<span class="sd">    """</span>
+    <span class="n">clock</span> <span class="o">=</span> <span class="n">clock</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span>
+    <span class="n">sleeper</span> <span class="o">=</span> <span class="n">sleeper</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span>
+    <span class="n">deadline</span> <span class="o">=</span> <span class="n">clock</span><span class="p">()</span> <span class="o">+</span> <span class="n">timeout</span>
+    <span class="k">while</span> <span class="n">clock</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">deadline</span><span class="p">:</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s2">"Just a moment"</span> <span class="ow">in</span> <span class="n">title</span> <span class="ow">or</span> <span class="s2">"Attention Required"</span> <span class="ow">in</span> <span class="n">title</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ScrapeError</span><span class="p">(</span>
+                <span class="s2">"Cloudflare is challenging the tab again. Clear it in Chrome and retry."</span>
+            <span class="p">)</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">first_result_id</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">current</span> <span class="ow">and</span> <span class="p">(</span><span class="n">previous_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">current</span> <span class="o">!=</span> <span class="n">previous_id</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">current</span>
+        <span class="n">sleeper</span><span class="p">(</span><span class="n">poll</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">ScrapeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"page did not render within </span><span class="si">{</span><span class="n">timeout</span><span class="si">}</span><span class="s2">s"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="save_data">
+<a class="viewcode-back" href="../../api.html#src.scrape.save_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_data</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Write *records* to *filename* atomically.</span>
+
+<span class="sd">    A crash mid-write cannot truncate the real file because the data lands in</span>
+<span class="sd">    a temporary file that is then renamed.</span>
+
+<span class="sd">    :param records: the records to serialise.</span>
+<span class="sd">    :param filename: destination path.</span>
+<span class="sd">    """</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">+</span> <span class="s2">".tmp"</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_saved">
+<a class="viewcode-back" href="../../api.html#src.scrape.load_saved">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_saved</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Read records previously written by :func:`save_data`.</span>
+
+<span class="sd">    :param filename: path to read.</span>
+<span class="sd">    :returns: the records, or ``[]`` when the file is missing or empty.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[]</span></div>
+
+
+
+<div class="viewcode-block" id="scrape_pages">
+<a class="viewcode-back" href="../../api.html#src.scrape.scrape_pages">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">scrape_pages</span><span class="p">(</span><span class="n">browser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_pages</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">known_urls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_when_seen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">pause</span><span class="o">=</span><span class="n">PAGE_PAUSE</span><span class="p">,</span> <span class="n">sleeper</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Walk the results pages newest first and return the records found.</span>
+
+<span class="sd">    :param browser: object implementing the browser interface described in</span>
+<span class="sd">        :mod:`src.browser`. Defaults to a real :class:`~src.browser.ChromeBrowser`.</span>
+<span class="sd">    :param max_pages: stop after this many pages.</span>
+<span class="sd">    :param known_urls: result URLs already stored; matching records are not</span>
+<span class="sd">        returned. The set is updated in place with the new URLs.</span>
+<span class="sd">    :param stop_when_seen: stop as soon as a page yields nothing new, which is</span>
+<span class="sd">        what makes an incremental pull cheap.</span>
+<span class="sd">    :param pause: courtesy delay between pages.</span>
+<span class="sd">    :param sleeper: callable used to wait; injected by tests.</span>
+<span class="sd">    :param log: callable receiving progress messages.</span>
+<span class="sd">    :returns: the list of new raw records.</span>
+<span class="sd">    :raises ScrapeError: when the first page never renders.</span>
+<span class="sd">    """</span>
+    <span class="n">browser</span> <span class="o">=</span> <span class="n">browser</span> <span class="ow">or</span> <span class="n">ChromeBrowser</span><span class="p">()</span>
+    <span class="n">sleeper</span> <span class="o">=</span> <span class="n">sleeper</span> <span class="ow">or</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="n">log</span> <span class="ow">or</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">message</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">known</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span> <span class="k">if</span> <span class="n">known_urls</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">known_urls</span>
+
+    <span class="n">new_records</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">start_url</span> <span class="o">=</span> <span class="n">build_url</span><span class="p">()</span>
+    <span class="n">browser</span><span class="o">.</span><span class="n">ensure_window</span><span class="p">(</span><span class="n">start_url</span><span class="p">)</span>
+    <span class="n">browser</span><span class="o">.</span><span class="n">navigate</span><span class="p">(</span><span class="n">start_url</span><span class="p">)</span>
+    <span class="n">last_first_id</span> <span class="o">=</span> <span class="n">wait_for_results</span><span class="p">(</span><span class="n">browser</span><span class="p">,</span> <span class="n">sleeper</span><span class="o">=</span><span class="n">sleeper</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_pages</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">current_html</span><span class="p">()</span>
+        <span class="n">page_records</span> <span class="o">=</span> <span class="n">scrape_data</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">page_records</span><span class="p">:</span>
+            <span class="c1"># Usually a render gap rather than the end of the results.</span>
+            <span class="n">sleeper</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">html</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">current_html</span><span class="p">()</span>
+            <span class="n">page_records</span> <span class="o">=</span> <span class="n">scrape_data</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">page_records</span><span class="p">:</span>
+            <span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">"page </span><span class="si">{</span><span class="n">page</span><span class="si">}</span><span class="s2">: no records found, stopping"</span><span class="p">)</span>
+            <span class="k">break</span>
+
+        <span class="n">fresh</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">page_records</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s2">"url"</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">known</span><span class="p">]</span>
+        <span class="n">known</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">"url"</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">fresh</span><span class="p">)</span>
+        <span class="n">new_records</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">fresh</span><span class="p">)</span>
+        <span class="n">log</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"page </span><span class="si">{</span><span class="n">page</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">fresh</span><span class="p">)</span><span class="si">}</span><span class="s2"> new of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">page_records</span><span class="p">)</span><span class="si">}</span><span class="s2"> entries "</span>
+            <span class="sa">f</span><span class="s2">"(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">new_records</span><span class="p">)</span><span class="si">}</span><span class="s2"> new so far)"</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">stop_when_seen</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">fresh</span><span class="p">:</span>
+            <span class="n">log</span><span class="p">(</span><span class="s2">"Reached entries that are already in the database."</span><span class="p">)</span>
+            <span class="k">break</span>
+
+        <span class="n">next_url</span> <span class="o">=</span> <span class="n">find_next_url</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">next_url</span><span class="p">:</span>
+            <span class="n">log</span><span class="p">(</span><span class="s2">"No Next link, reached the end of the results."</span><span class="p">)</span>
+            <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">page</span> <span class="o">%</span> <span class="n">RECYCLE_EVERY</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">browser</span><span class="o">.</span><span class="n">recycle_tab</span><span class="p">(</span><span class="n">next_url</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">BrowserError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># fall back to plain navigation</span>
+                <span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">"tab recycle failed (</span><span class="si">{</span><span class="n">exc</span><span class="si">}</span><span class="s2">), navigating instead"</span><span class="p">)</span>
+                <span class="n">browser</span><span class="o">.</span><span class="n">navigate</span><span class="p">(</span><span class="n">next_url</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sleeper</span><span class="p">(</span><span class="n">pause</span><span class="p">)</span>
+            <span class="n">browser</span><span class="o">.</span><span class="n">navigate</span><span class="p">(</span><span class="n">next_url</span><span class="p">)</span>
+        <span class="n">last_first_id</span> <span class="o">=</span> <span class="n">wait_for_results</span><span class="p">(</span><span class="n">browser</span><span class="p">,</span> <span class="n">last_first_id</span><span class="p">,</span> <span class="n">sleeper</span><span class="o">=</span><span class="n">sleeper</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_records</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

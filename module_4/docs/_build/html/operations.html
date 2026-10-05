@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operational notes &mdash; Grad Cafe Analytics</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9f5556dd"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
+    <link rel="prev" title="Testing guide" href="testing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Grad Cafe Analytics
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview and setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#what-the-service-does">What the service does</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#install">Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#environment-variables">Environment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#set-up-the-database">Set up the database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#load-the-module-2-dataset">Load the Module 2 dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-analysis-from-the-console">Run the analysis from the console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-web-application">Run the web application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#run-the-tests">Run the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#web-layer">Web layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#etl-layer">ETL layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#database-layer">Database layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#the-schema">The schema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#markers">Markers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#the-database-the-tests-use">The database the tests use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#stable-selectors">Stable selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#fixtures">Fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#test-doubles">Test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#determinism">Determinism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#coverage">Coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Operational notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#busy-state-policy">Busy-state policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#idempotency-and-uniqueness">Idempotency and uniqueness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-quality-rules">Data quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#failure-handling">Failure handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-a-live-pull">Running a live pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#local-development">Local development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#tests">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#continuous-integration">Continuous integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#web-layer">Web layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#flask-app">flask_app</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#analysis-layer">Analysis layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#query-data">query_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#orm-queries">orm_queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#formatting">formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#etl-layer">ETL layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#scrape">scrape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#browser">browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#clean">clean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#standardize">standardize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#pull-data">pull_data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#database-layer">Database layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#load-data">load_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#models">models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#config">config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Grad Cafe Analytics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Operational notes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/operations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="operational-notes">
+<h1>Operational notes<a class="headerlink" href="#operational-notes" title="Link to this heading"></a></h1>
+<section id="busy-state-policy">
+<h2>Busy-state policy<a class="headerlink" href="#busy-state-policy" title="Link to this heading"></a></h2>
+<p>One pull at a time, enforced by <a class="reference internal" href="api.html#src.flask_app.PullState" title="src.flask_app.PullState"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.flask_app.PullState</span></code></a>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/pull-data</span></code> while idle takes the slot and returns <strong>202</strong> with
+<code class="docutils literal notranslate"><span class="pre">{&quot;ok&quot;:</span> <span class="pre">true}</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/pull-data</span></code> while a pull runs returns <strong>409</strong> with
+<code class="docutils literal notranslate"><span class="pre">{&quot;busy&quot;:</span> <span class="pre">true}</span></code> and does not start anything.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/update-analysis</span></code> while a pull runs returns <strong>409</strong> with
+<code class="docutils literal notranslate"><span class="pre">{&quot;busy&quot;:</span> <span class="pre">true}</span></code> and performs no update. The running pull is left alone.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/update-analysis</span></code> while idle returns <strong>200</strong>, recomputes the
+analysis and increments <code class="docutils literal notranslate"><span class="pre">analysis_version</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/status</span></code> always answers, running or not.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">begin()</span></code> takes a lock and checks the flag inside it, so two requests
+arriving together cannot both start a scrape. The flag is released in
+<code class="docutils literal notranslate"><span class="pre">finish()</span></code> on both the success and the failure path, so a failed pull never
+wedges the application.</p>
+<p>In production the pull runs on a background thread and the request returns
+immediately. Tests build the app with <code class="docutils literal notranslate"><span class="pre">run_async=False</span></code> so the work happens
+inside the request and assertions need no waiting.</p>
+</section>
+<section id="idempotency-and-uniqueness">
+<h2>Idempotency and uniqueness<a class="headerlink" href="#idempotency-and-uniqueness" title="Link to this heading"></a></h2>
+<p>The uniqueness key is <code class="docutils literal notranslate"><span class="pre">p_id</span></code>, the Grad Café entry id, which is also the
+primary key. It is read from the record’s <code class="docutils literal notranslate"><span class="pre">entry_id</span></code> or parsed out of its
+<code class="docutils literal notranslate"><span class="pre">/result/&lt;id&gt;</span></code> URL.</p>
+<p>Writes are <code class="docutils literal notranslate"><span class="pre">INSERT</span> <span class="pre">...</span> <span class="pre">ON</span> <span class="pre">CONFLICT</span> <span class="pre">(p_id)</span> <span class="pre">DO</span> <span class="pre">UPDATE</span></code>, which means:</p>
+<ul class="simple">
+<li><p>re-pulling the same entries leaves the row count unchanged;</p></li>
+<li><p>a re-scraped entry whose status has changed updates in place; and</p></li>
+<li><p>duplicates inside a single batch collapse before the insert, because the
+loader keys them into a dict first.</p></li>
+</ul>
+<p>The scraper also receives the set of stored URLs and stops at the first page
+with nothing new, so an incremental pull reads one or two pages rather than
+the whole archive.</p>
+</section>
+<section id="data-quality-rules">
+<h2>Data quality rules<a class="headerlink" href="#data-quality-rules" title="Link to this heading"></a></h2>
+<p>Values outside a plausible range are stored as <code class="docutils literal notranslate"><span class="pre">NULL</span></code> rather than kept:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34.0%" />
+<col style="width: 22.0%" />
+<col style="width: 44.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Accepted range</p></th>
+<th class="head"><p>Typical rejected value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gpa</span></code></p></td>
+<td><p>0.0 to 4.0</p></td>
+<td><p>9.2, a 10-point scale</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gre</span></code>, <code class="docutils literal notranslate"><span class="pre">gre_v</span></code></p></td>
+<td><p>130 to 170</p></td>
+<td><p>320, a combined score</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gre_aw</span></code></p></td>
+<td><p>0.0 to 6.0</p></td>
+<td><p>10</p></td>
+</tr>
+</tbody>
+</table>
+<p>A record with no usable id is skipped and counted, never written.</p>
+</section>
+<section id="failure-handling">
+<h2>Failure handling<a class="headerlink" href="#failure-handling" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>A loader or scraper exception returns <strong>500</strong> with <code class="docutils literal notranslate"><span class="pre">{&quot;ok&quot;:</span> <span class="pre">false}</span></code> and the
+error message. The batch runs in one transaction, so nothing is partly
+written.</p></li>
+<li><p>A database read failure on <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/analysis</span></code> renders the page with an error
+banner rather than a stack trace, so the buttons stay usable.</p></li>
+<li><p>The scraper distinguishes a render gap from the end of the results by
+re-reading a blank page once before believing it.</p></li>
+<li><p>A failed Chrome tab recycle falls back to plain navigation rather than
+ending a long run.</p></li>
+</ul>
+</section>
+<section id="running-a-live-pull">
+<h2>Running a live pull<a class="headerlink" href="#running-a-live-pull" title="Link to this heading"></a></h2>
+<p>Grad Café is behind Cloudflare, so the scraper drives a Chrome window that has
+already been cleared by hand:</p>
+<ol class="arabic simple">
+<li><p>Chrome: <strong>View → Developer → Allow JavaScript from Apple Events</strong></p></li>
+<li><p>Open <a class="reference external" href="https://www.thegradcafe.com/survey">https://www.thegradcafe.com/survey</a> and clear the human check</p></li>
+<li><p>Leave that window frontmost, then press <strong>Pull Data</strong> or run
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">src.pull_data</span> <span class="pre">--max-pages</span> <span class="pre">5</span></code></p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">robots.txt</span></code> is fetched and checked before any page is read.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="testing.html" class="btn btn-neutral float-left" title="Testing guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Robby Ketchell.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

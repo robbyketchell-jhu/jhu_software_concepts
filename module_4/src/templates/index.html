@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grad Cafe Analysis</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <h1>Grad Cafe Applicant Analysis</h1>
+        <p class="subtitle">
+          Module 4 &middot; PostgreSQL via SQLAlchemy &middot;
+          <span data-testid="analysis-version">analysis #{{ state.analysis_version }}</span>
+        </p>
+      </div>
+      <button type="button" class="btn btn-primary"
+              id="update-analysis-btn" data-testid="{{ update_testid }}">
+        Update Analysis
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+    <div id="flash" class="flash" role="status" hidden></div>
+
+    {% if error %}
+      <div class="flash flash-error" data-testid="analysis-error">{{ error }}</div>
+    {% endif %}
+
+    <section class="card controls">
+      <div class="controls-text">
+        <h2>Pull Data</h2>
+        <p>
+          Pull Data checks Grad Caf&eacute; for newly submitted application results and
+          adds new records to the database. Depending on the amount of new data
+          available, this may take some time. Only one pull runs at a time, and a pull
+          never removes or overwrites usable existing records.
+        </p>
+        <p>
+          <strong>Update Analysis</strong> (top right) re-queries PostgreSQL and redraws
+          this page with the latest numbers. It does not start a scrape. While a pull is
+          running it reports that new data is being retrieved and leaves the pull alone.
+        </p>
+      </div>
+      <div class="controls-actions">
+        <button type="button" class="btn btn-secondary"
+                id="pull-data-btn" data-testid="{{ pull_testid }}"
+                {% if state.running %}disabled{% endif %}>
+          Pull Data
+        </button>
+        <div id="job-status" class="job-status {% if state.running %}is-running{% endif %}"
+             data-testid="job-status">
+          {% if state.running %}
+            <span class="dot"></span> Retrieving new data (started {{ state.started_at }})&hellip;
+          {% elif state.last_error %}
+            Last pull failed: {{ state.last_error }}
+          {% elif state.finished_at %}
+            Last pull finished at {{ state.finished_at }}.
+          {% else %}
+            No pull has been run in this session.
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <section class="results" data-testid="analysis-results">
+      {% for r in results %}
+        <article class="card result {% if r.kind == 'table' %}wide{% endif %}"
+                 data-testid="result-{{ r.number }}">
+          <h3><span class="qnum">Q{{ r.number }}</span> {{ r.title }}</h3>
+          {% if r.kind == 'lines' %}
+            <dl class="answers">
+              {% for label, value in r.lines %}
+                <div class="answer">
+                  <dt>{{ label }}</dt>
+                  <dd><span class="answer-label">Answer:</span>
+                      <span class="answer-value" data-testid="answer-value">{{ value }}</span></dd>
+                </div>
+              {% endfor %}
+            </dl>
+          {% else %}
+            <p class="answer-label-row"><span class="answer-label">Answer:</span>
+               {{ r.rows | length }} row{{ '' if r.rows | length == 1 else 's' }}</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>{% for c in r.columns %}<th>{{ c }}</th>{% endfor %}</tr>
+                </thead>
+                <tbody>
+                  {% for row in r.rows %}
+                    <tr>{% for v in row %}<td data-testid="answer-value">{{ v }}</td>{% endfor %}</tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </section>
+  </main>
+
+  <footer class="footer">
+    Data: self-reported Grad Caf&eacute; submissions. Each number describes the entries
+    people chose to post, not the applicant population.
+  </footer>
+
+  <script>
+    // Both buttons post JSON and report what came back. Nothing here polls on a
+    // timer unless a pull is actually running.
+    (function () {
+      var flash = document.getElementById('flash');
+      var pullBtn = document.getElementById('pull-data-btn');
+      var updateBtn = document.getElementById('update-analysis-btn');
+      var jobStatus = document.getElementById('job-status');
+
+      function say(message, kind) {
+        flash.hidden = false;
+        flash.textContent = message;
+        flash.className = 'flash flash-' + (kind || 'info');
+      }
+
+      function post(path, onDone) {
+        return fetch(path, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }).then(function (response) {
+          return response.json().then(function (body) {
+            onDone(response.status, body);
+          });
+        }).catch(function () {
+          say('The request could not be sent. Is the server still running?', 'error');
+        });
+      }
+
+      pullBtn.addEventListener('click', function () {
+        pullBtn.disabled = true;
+        say('Starting a data pull…', 'info');
+        post('/pull-data', function (status, body) {
+          say(body.message, status === 409 ? 'warning' : (body.ok ? 'success' : 'error'));
+          if (status === 202 && body.busy) { poll(); } else { pullBtn.disabled = false; }
+        });
+      });
+
+      updateBtn.addEventListener('click', function () {
+        post('/update-analysis', function (status, body) {
+          if (status === 200) {
+            say(body.message + ' Reloading…', 'success');
+            window.location.reload();
+          } else {
+            say(body.message, status === 409 ? 'warning' : 'error');
+          }
+        });
+      });
+
+      function poll() {
+        fetch('/status').then(function (r) { return r.json(); }).then(function (state) {
+          if (state.running) {
+            jobStatus.textContent = 'Retrieving new data (started ' + state.started_at + ')…';
+            setTimeout(poll, 3000);
+          } else {
+            pullBtn.disabled = false;
+            jobStatus.textContent = state.last_error
+              ? 'Last pull failed: ' + state.last_error
+              : 'Last pull finished at ' + state.finished_at + '.';
+            say('Pull finished. Click Update Analysis to refresh the numbers.', 'success');
+          }
+        });
+      }
+
+      if (jobStatus.classList.contains('is-running')) { poll(); }
+    })();
+  </script>
+</body>
+</html>
